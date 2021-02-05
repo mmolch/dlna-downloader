@@ -12,6 +12,8 @@ class MainWindow(wx.Dialog):
     def __init__(self, *args, **kwargs):
         wx.Dialog.__init__(self, title='DLNA Downloader', style=wx.DEFAULT_FRAME_STYLE, *args, **kwargs)
 
+        self.SetIcon(wx.Icon(wx.GetApp().GetFilePath("icons", "32", "dlna-downloader.png")))
+
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.Bind(wx.EVT_WINDOW_DESTROY, self.OnDestroy)
         self.Bind(wx.EVT_SIZE, self.__OnSize)

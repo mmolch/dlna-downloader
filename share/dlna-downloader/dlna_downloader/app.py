@@ -48,6 +48,8 @@ class App(wx.App):
 
 
     def OnInit(self):
+        self.SetAppDisplayName("DLNA Downloader")
+
         self.settings = Settings()
         self.__data_dir = data_dir
 
