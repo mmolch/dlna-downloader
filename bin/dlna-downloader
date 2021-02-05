@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+appDir = os.path.realpath(__file__)
+appDir = os.path.dirname(appDir)
+appDir = os.path.dirname(appDir)
+dataDir= os.path.join(appDir, 'share', 'dlna-downloader')
+
+sys.path.insert(0, dataDir)
+
+from dlna_downloader import App
+
+app = App()
+app.MainLoop()

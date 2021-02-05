@@ -1,0 +1,190 @@
+# German translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-02-05 18:29+0100\n"
+"PO-Revision-Date: 2021-02-05 18:31+0100\n"
+"Last-Translator: \n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+"X-Generator: Poedit 2.3\n"
+
+#, python-format
+msgid "%(num)d Directory"
+msgid_plural "%(num)d Directories"
+msgstr[0] "%(num)d Ordner"
+msgstr[1] "%(num)d Ordner"
+
+#, python-format
+msgid "%(num)d File"
+msgid_plural "%(num)d Files"
+msgstr[0] "%(num)d Datei"
+msgstr[1] "%(num)d Dateien"
+
+msgid "&About…"
+msgstr "&Über…"
+
+msgid "&Quit"
+msgstr "&Beenden"
+
+msgid "&Settings…"
+msgstr "&Einstellungen…"
+
+msgid ""
+"A file is currently downloading.\n"
+"The file will be incomplete if you close the application.\n"
+"Are you sure you want to quit?"
+msgstr ""
+"Eine Datei wird derzeit heruntergeladen.\n"
+"Die Datei wird unvollständig sein, wenn die Anwendung geschlossen "
+"wird.\n"
+"Soll die Anwendung dennoch geschlossen werden?"
+
+msgid "About"
+msgstr "Über"
+
+msgid "Channel"
+msgstr "Sender"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Connecting…"
+msgstr "Verbinde…"
+
+msgid "Created by Moritz Molch"
+msgstr "Erstellt von Moritz Molch"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Devices"
+msgstr "Geräte"
+
+msgid "Done"
+msgstr "Abgeschlossen"
+
+msgid "Download"
+msgstr "Herunterladen"
+
+msgid "Download Directory"
+msgstr "Download Verzeichnis"
+
+msgid "Download in progress"
+msgstr "Download läuft"
+
+msgid "Downloads"
+msgstr "Downloads"
+
+msgid "Duration"
+msgstr "Dauer"
+
+msgid "Failed to read directory"
+msgstr "Das Verzeichnis konnte nicht gelesen werden"
+
+msgid "File"
+msgstr "Datei"
+
+msgid "No device selected"
+msgstr "Kein Gerät ausgewählt"
+
+msgid ""
+"Please choose a device from the device list.\n"
+"If your device isn't shown, click on \"Refresh\" to\n"
+"manually ask for responses from all DLNA-enabled\n"
+"devices whithin your network."
+msgstr ""
+"Bitte wähle ein Gerät aus der Geräte-Liste.\n"
+"Sollte ein Gerät nicht aufgelistet sein, klicke\n"
+"bitte auf \"Aktualisieren\", um das Netzwerk erneut\n"
+"nach allen DLNA-fähigen Geräten zu durchsuchen."
+
+msgid "Queued"
+msgstr "In Warteschlange"
+
+msgid "Reading directory…"
+msgstr "Verzeichnis wird gelesen…"
+
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+msgid "Reload"
+msgstr "Neu laden"
+
+msgid "Remove"
+msgstr "Entfernen"
+
+msgid "Search for DLNA-enabled devices in the network"
+msgstr "Durchsuche das Netzwerk nach DLNA-fähigen Geräten"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Size"
+msgstr "Größe"
+
+msgid "Source"
+msgstr "Quelle"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stop"
+msgstr "Stop"
+
+msgid "Stopped"
+msgstr "Gestoppt"
+
+msgid ""
+"The currently downloading file will be incomplete if you stop the "
+"download.\n"
+"Please note that downloads can not be resumed. \n"
+"Do you want to stop the download nevertheless?"
+msgstr ""
+"Die derzeit heruntergeladene Datei wird unvollständig sein falls der "
+"Download gestoppt wird.\n"
+"Abgebrochene Downloads können nicht fortgesetzt werden.\n"
+"Soll der Download dennoch gestoppt werden?"
+
+msgid "The directory is empty"
+msgstr "Das Verzeichnis ist leer"
+
+msgid ""
+"The file is currently downloading.\n"
+"The file will be incomplete if you remove the download.\n"
+"Do you want to remove the download nevertheless?"
+msgstr ""
+"Die Datei wird derzeit heruntergeladen.\n"
+"Die Datei wird unvollständig sein falls der Download entfernt wird.\n"
+"Soll der Download trotzdem entfernt werden?"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Waiting for device…"
+msgstr "Warte auf Gerät…"
+
+msgid "{} active"
+msgstr "{} aktiv"
+
+msgid "{} completed"
+msgstr "{} abgeschlossen"
+
+msgid "{} queued"
+msgstr "{} in Warteschlage"
+
+#~ msgid "&Quit…"
+#~ msgstr "&Beenden"
