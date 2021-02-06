@@ -824,8 +824,8 @@ class BreadCrumbButton(wx.Panel):
 
     def OnPaint(self, event):
         dc = wx.BufferedPaintDC(self)
-        dc.SetBackground(wx.Brush(wx.SystemSettings.GetColour(wx.SYS_COLOUR_FRAMEBK)))
-        dc.SetTextForeground(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
+        dc.SetBackground(wx.Brush(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)))
+        dc.SetTextForeground(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
         dc.Clear()
 
         clientRect = self.GetClientRect()
@@ -837,7 +837,7 @@ class BreadCrumbButton(wx.Panel):
 
         else:
             if self.__state_mouseover:
-                    bg_color = MixColors(wx.SystemSettings.GetColour(wx.SYS_COLOUR_FRAMEBK),
+                    bg_color = MixColors(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW),
                                          wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT),
                                          0.1)
                     dc.SetBrush(wx.Brush(bg_color))
@@ -855,7 +855,8 @@ class BreadCrumbs(wx.Control):
 
         self.__path = {}
 
-        self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_FRAMEBK))
+        #self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_FRAMEBK))
+        self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
 
         wx.GetApp().directory.Bind(ContentDirectory.Event.DEVICE_CHANGED, self.__OnDirChanged)
         wx.GetApp().directory.Bind(ContentDirectory.Event.OBJECT_ID_CHANGED, self.__OnDirChanged)
