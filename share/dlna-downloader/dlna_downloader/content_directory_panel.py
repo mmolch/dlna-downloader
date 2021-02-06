@@ -823,7 +823,7 @@ class BreadCrumbButton(wx.Panel):
 
 
     def OnPaint(self, event):
-        dc = wx.AutoBufferedPaintDCFactory(self)
+        dc = wx.BufferedPaintDC(self)
         dc.SetBackground(wx.Brush(wx.SystemSettings.GetColour(wx.SYS_COLOUR_FRAMEBK)))
         dc.SetTextForeground(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
         dc.Clear()

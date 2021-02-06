@@ -65,7 +65,7 @@ class DeviceButton(wx.Control):
 
 
     def OnPaint(self, event):
-        dc = wx.AutoBufferedPaintDCFactory(self)
+        dc = wx.BufferedPaintDC(self)
         dc.SetBackground(wx.Brush(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)))
         dc.SetTextForeground(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
         dc.Clear()

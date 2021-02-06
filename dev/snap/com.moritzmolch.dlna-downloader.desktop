@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Icon=dlna-downloader
+Exec=dlna-downloader
+Categories=AudioVideo;

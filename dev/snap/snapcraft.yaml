@@ -1,0 +1,33 @@
+name: dlna-downloader
+adopt-info: dlna-downloader
+license: GPL-3.0+
+grade: stable
+
+confinement: strict
+base: core18
+
+parts:
+  dlna-downloader:
+    plugin: dump
+    source: .
+    parse-info: [com.moritzmolch.dlna-downloader.appdata.xml]
+    stage-packages:
+      - python3-wxgtk4.0
+
+apps:
+  dlna-downloader:
+    command: bin/dlna-downloader
+    desktop: com.moritzmolch.dlna-downloader.desktop
+    extensions: [gnome-3-34]
+    plugs:
+      - desktop
+      - home
+      - network
+      - network-bind
+      - wayland
+    #slots:
+    #  dbus-daemon:
+    #    interface: dbus
+    #    bus: session
+    #    name: com.moritzmolch.dlna-downloader
+    common-id: com.moritzmolch.dlna-downloader

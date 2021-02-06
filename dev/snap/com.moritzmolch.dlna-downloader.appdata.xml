@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.moritzmolch.dlna-downloader</id> 
+  <name>DLNA Downloader</name>
+  <summary>A user-friendly application to download media from DLNA-enabled devices</summary>
+  <description>
+    The DLNA Downloader provides an intuitive way to browse and download media
+    from DLNA-enabled devices such as HDD videorecorders or TVs. If supported by
+    the device, the DLNA Downloader shows you not only the title, but also the
+    size, duration, date and channel the program was recorded on.
+  </description>
+  <icon type="local">share/dlna-downloader/icons/256/dlna-downloader.png</icon>
+  <launchable type="desktop-id">
+    com.moritzmolch.dlna-downloader.desktop
+  </launchable>
+  <releases>
+    <release date="2021-02-05" version="1.0"/>
+  </releases>
+</component>

@@ -32,10 +32,10 @@ gettext.bindtextdomain('dlna-downloader', locale_dir)
 gettext.textdomain('dlna-downloader')
 _ = gettext.gettext
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 wx.Log.SetLogLevel(0)
 #logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
-logging.basicConfig(level=logging.INFO, force=True)
+logging.basicConfig(level=logging.INFO)
 
 
 
