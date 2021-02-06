@@ -14,7 +14,7 @@ from .mimedb import mimedb
 from .settings_dialog import SettingsDialog
 from .transfer import Transfer
 from .transfers import Transfers
-from .util import MixColors, IconFromSymbolic, SizeToString, CleanFilename
+from .util import MixColors, IconFromSymbolic, SizeToString, CleanFilename, UniqueFilename
 
 from pyupnp import PyUpnp
 
@@ -72,8 +72,18 @@ class ContentDirectoryListView(wx.ListView):
         try:
             for index in self.__selected_items:
                 item = self.__directory.items[index]
-                title = item[ContentDirectory.Field.TITLE]
                 res = item[ContentDirectory.Field.RES]
+
+                already_downloading = False
+                for transfer in wx.GetApp().transfers.transfers:
+                    if transfer.source == res:
+                        already_downloading = True
+                        break
+
+                if already_downloading:
+                    continue
+
+                title = item[ContentDirectory.Field.TITLE]
                 if ContentDirectory.Field.SIZE in item:
                     size = item[ContentDirectory.Field.SIZE]
                 else:
@@ -91,6 +101,7 @@ class ContentDirectoryListView(wx.ListView):
                     filename = "{}.{}".format(CleanFilename(title), extension)
 
                 filepath = os.path.join(wx.GetApp().settings.Get("download-directory"), filename)
+                filepath = UniqueFilename(filepath)
                 wx.GetApp().transfers.Add(Transfer(filepath, res, size))
         except Exception as e:
             print(str(e))

@@ -1,5 +1,7 @@
 import wx
 
+import os
+
 
 def lerp(val1, val2, amount):
     "Simple linear interpolation between two numbers"
@@ -74,3 +76,17 @@ def SecondsToString(seconds_in):
 
 def CleanFilename(filename):
     return filename.strip().replace('\\','_').replace('/', '_').replace(':', '').replace('*', '').replace('?', '').replace('"', '').replace('<', '').replace('>', '').replace('|', '')
+
+
+def UniqueFilename(path:str):
+    if not os.path.exists(path):
+        return path
+
+    i = 1
+    pth, ext = path.rsplit('.', 1)
+    new_path = "{} ({}).{}".format(pth, i, ext)
+    while os.path.exists(new_path):
+        i += 1
+        new_path = "{} ({}).{}".format(pth, i, ext)
+
+    return new_path
