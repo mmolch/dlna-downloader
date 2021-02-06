@@ -789,6 +789,7 @@ class BreadCrumbButton(wx.Panel):
         self.GetParent().Refresh()
 
         dc = wx.MemoryDC()
+        dc.SetFont(self.GetFont())
         text_extent = dc.GetTextExtent(self.__name)
         dc.Destroy()
 
