@@ -19,10 +19,8 @@ apps:
     desktop: ../project/snap/local/com.moritzmolch.dlna-downloader.desktop
     extensions: [gnome-3-34]
     plugs:
-      - desktop
       - home
       - removable-media
       - network
       - network-bind
-      - wayland
     common-id: com.moritzmolch.dlna-downloader
