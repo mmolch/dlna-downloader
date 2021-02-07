@@ -9,7 +9,7 @@
     the device, the DLNA Downloader shows you not only the title, but also the
     size, duration, date and channel the program was recorded on.
   </description>
-  <icon type="local">share/dlna-downloader/icons/256/dlna-downloader.png</icon>
+  <icon type="local">dlna-downloader.png</icon>
   <launchable type="desktop-id">
     com.moritzmolch.dlna-downloader.desktop
   </launchable>

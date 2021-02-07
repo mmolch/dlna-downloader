@@ -2,9 +2,12 @@ name: dlna-downloader
 adopt-info: dlna-downloader
 license: GPL-3.0
 grade: stable
-
 confinement: strict
 base: core18
+architectures:
+  - build-on: amd64
+#  - build-on: arm64
+#  - build-on: armhf
 
 parts:
   dlna-downloader:
