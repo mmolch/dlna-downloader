@@ -13,14 +13,13 @@ parts:
   dlna-downloader:
     plugin: dump
     source: .
-    parse-info: [snap/local/com.moritzmolch.dlna-downloader.appdata.xml]
+    parse-info: [dev/snap/com.moritzmolch.dlna-downloader.appdata.xml]
     override-prime: |
-      ${SNAPCRAFT_PROJECT_DIR}/snap/local/override-prime.sh
+      ${SNAPCRAFT_PROJECT_DIR}/dev/snap/override-prime.sh
 
 apps:
   dlna-downloader:
     command: dlna-downloader
-    desktop: ${SNAPCRAFT_PROJECT_DIR}/snap/local/com.moritzmolch.dlna-downloader.desktop
     extensions: [gnome-3-34]
     plugs:
       - home

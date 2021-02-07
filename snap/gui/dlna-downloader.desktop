@@ -3,6 +3,6 @@ Type=Application
 Terminal=false
 Name=DLNA Downloader
 Comment=Download media from DLNA-enabled devices
-Icon=dlna-downloader
+Icon=${SNAP}/meta/gui/dlna-downloader.png
 Exec=dlna-downloader
 Categories=AudioVideo;

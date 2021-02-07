@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo '##### PRIME BEGIN ###################################'
+
 install_package() {
     echo "Downloading ${1}"
     apt-get download "${1}"
@@ -13,7 +15,7 @@ install_package() {
 rm -rf *
 
 mkdir 'bin' 2>/dev/null
-cp -T "${SNAPCRAFT_PROJECT_DIR}/snap/local/dlna-downloader" 'bin/dlna-downloader'
+cp -T "${SNAPCRAFT_PROJECT_DIR}/dev/snap/dlna-downloader" 'bin/dlna-downloader'
 
 while IFS= read -r path; do
     dir=${path%/*}
@@ -40,4 +42,7 @@ install_package libwxgtk3.0-gtk3-0v5
 install_package libwxbase3.0-0v5
 install_package libpython3.6
 
+
+ls -la
+echo '##### PRIME END #####################################'
 exit 0
