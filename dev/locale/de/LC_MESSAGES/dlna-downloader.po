@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-05 18:29+0100\n"
-"PO-Revision-Date: 2021-02-05 18:31+0100\n"
+"POT-Creation-Date: 2021-02-07 12:42+0100\n"
+"PO-Revision-Date: 2021-02-07 12:43+0100\n"
 "Last-Translator: \n"
 "Language: de\n"
 "Language-Team: de <LL@li.org>\n"
@@ -77,11 +77,11 @@ msgstr "Abgeschlossen"
 msgid "Download"
 msgstr "Herunterladen"
 
-msgid "Download Directory"
-msgstr "Download Verzeichnis"
-
 msgid "Download in progress"
 msgstr "Download läuft"
+
+msgid "Download-Directory"
+msgstr "Download-Verzeichnis"
 
 msgid "Downloads"
 msgstr "Downloads"
@@ -125,7 +125,7 @@ msgid "Remove"
 msgstr "Entfernen"
 
 msgid "Search for DLNA-enabled devices in the network"
-msgstr "Durchsuche das Netzwerk nach DLNA-fähigen Geräten"
+msgstr "Das Netzwerk nach DLNA-fähigen Geräten durchsuchen"
 
 msgid "Settings"
 msgstr "Einstellungen"
@@ -174,8 +174,14 @@ msgstr ""
 msgid "Title"
 msgstr "Titel"
 
+msgid "View License"
+msgstr "Lizenz ansehen"
+
 msgid "Waiting for device…"
 msgstr "Warte auf Gerät…"
+
+msgid "remaining"
+msgstr "verbleibend"
 
 msgid "{} active"
 msgstr "{} aktiv"
@@ -186,5 +192,11 @@ msgstr "{} abgeschlossen"
 msgid "{} queued"
 msgstr "{} in Warteschlage"
 
+msgid "© 2021 | License: GPL 3"
+msgstr "© 2021 | Lizenz: GPL 3"
+
 #~ msgid "&Quit…"
 #~ msgstr "&Beenden"
+
+#~ msgid "Download Directory"
+#~ msgstr "Download Verzeichnis"

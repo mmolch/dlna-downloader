@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+appDir = os.path.realpath(__file__)
+appDir = os.path.dirname(appDir)
+appDir = os.path.dirname(appDir)
+dataDir= os.path.join(appDir, 'share', 'dlna-downloader')
+
+sys.path.insert(0, dataDir)
+
+sys.path.insert(0, os.path.join(appDir, 'usr', 'lib', 'python3', 'dist-packages'))
+sys.path.insert(0, os.path.join(appDir, 'usr', 'lib', 'x86_64-linux-gnu'))
+
+from dlna_downloader import App
+
+app = App()
+app.MainLoop()

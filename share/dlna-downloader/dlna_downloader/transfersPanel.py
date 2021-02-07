@@ -129,7 +129,7 @@ class TransfersListView(wx.ListView):
             if transfer.size and transfer.size > 0:
                 percent_str = str(round(transfer.received_bytes*100/transfer.size, 2))
                 remaining_time = SecondsToString(int((transfer.size-transfer.received_bytes)/transfer.speed))
-                return "{} %, {}, {}/s, {} remaining".format(percent_str, received_str, speed_str, remaining_time)
+                return "{} %, {}, {}/s, {} {}".format(percent_str, received_str, speed_str, remaining_time, _("remaining"))
             else:
                 return "{}, {}/s".format(received_str, speed_str)
         elif transfer.state == Transfer.State.INIT:
@@ -203,13 +203,13 @@ class TransfersPanel(wx.Control):
             pass
 
         if num_active > 0:
-            infos.append(_("{} active".format(num_active)))
+            infos.append(_("{} active").format(num_active))
 
         if num_queued > 0:
-            infos.append(_("{} queued".format(num_queued)))
+            infos.append(_("{} queued").format(num_queued))
 
         if wx.GetApp().transfers.completed > 0:
-            infos.append(_("{} completed".format(wx.GetApp().transfers.completed)))
+            infos.append(_("{} completed").format(wx.GetApp().transfers.completed))
 
         if len(infos) > 0:
             self.title.SetLabel(_('Downloads')+' ({})'.format(', '.join(infos)))

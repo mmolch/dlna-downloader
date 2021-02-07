@@ -70,15 +70,15 @@ class AboutDialog(wx.Dialog):
 
         sizer.Add(0, font_normal.GetPixelSize()[1]/3)
 
-        created_by_text = wx.StaticText(self, label="© 2021 | License: GPL 3")
+        created_by_text = wx.StaticText(self, label=_("© 2021 | License: GPL 3"))
         sizer.Add(created_by_text, 0, wx.EXPAND)
 
         sizer.Add(0, font_normal.GetPixelSize()[1])
 
         button_sizer = wx.BoxSizer()
         sizer.Add(button_sizer, 0, wx.EXPAND)
-        self.button_view_license = wx.Button(self, label='View License')
-        self.button_close = wx.Button(self, label='Close')
+        self.button_view_license = wx.Button(self, label=_("View License"))
+        self.button_close = wx.Button(self, label=_("Close"))
         button_sizer.Add(self.button_view_license, 0)
         button_sizer.Add(font_normal.GetPixelSize()[1]*5, 0, 1)
         button_sizer.Add(self.button_close, 0)

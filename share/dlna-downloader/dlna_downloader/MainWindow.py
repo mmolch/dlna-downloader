@@ -8,9 +8,9 @@ from .devices_panel import DevicesPanel
 import gettext
 _ = gettext.gettext
 
-class MainWindow(wx.Dialog):
+class MainWindow(wx.Frame):
     def __init__(self, *args, **kwargs):
-        wx.Dialog.__init__(self, title='DLNA Downloader', style=wx.DEFAULT_FRAME_STYLE, *args, **kwargs)
+        wx.Frame.__init__(self, title='DLNA Downloader', style=wx.DEFAULT_FRAME_STYLE, *args, **kwargs)
 
         self.SetIcon(wx.Icon(wx.GetApp().GetFilePath("icons", "32", "dlna-downloader.png")))
 

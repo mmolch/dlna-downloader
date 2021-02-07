@@ -19,7 +19,7 @@ class SettingsDialog(wx.Dialog):
         sizer = wx.BoxSizer(wx.VERTICAL)
         borderSizer.Add(sizer, 1, wx.EXPAND|wx.ALL, 6)
 
-        download_directory_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, _("Download Directory"))
+        download_directory_sizer = wx.StaticBoxSizer(wx.VERTICAL, self, _("Download-Directory"))
         self.download_directory = wx.DirPickerCtrl(self)
         self.download_directory.Bind(wx.EVT_DIRPICKER_CHANGED, self.OnDownloadDirectoryChanged)
         download_directory_sizer.Add(self.download_directory, 0, wx.EXPAND|wx.ALL, 6)

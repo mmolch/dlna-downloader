@@ -1,6 +1,6 @@
 name: dlna-downloader
 adopt-info: dlna-downloader
-license: GPL-3.0+
+license: GPL-3.0
 grade: stable
 
 confinement: strict
@@ -10,24 +10,22 @@ parts:
   dlna-downloader:
     plugin: dump
     source: .
-    parse-info: [com.moritzmolch.dlna-downloader.appdata.xml]
-    stage-packages:
-      - python3-wxgtk4.0
+    parse-info: [../../../project/com.moritzmolch.dlna-downloader.appdata.xml]
+    #override-pull: ../../../project/null.sh
+    #override-build: ../../../project/null.sh
+    #override-stage: ../project/null.sh
+    override-prime: ../project/override-prime.sh
 
 apps:
   dlna-downloader:
-    command: bin/dlna-downloader
-    desktop: com.moritzmolch.dlna-downloader.desktop
+    command: dlna-downloader
+    desktop: ../project/com.moritzmolch.dlna-downloader.desktop
     extensions: [gnome-3-34]
     plugs:
       - desktop
       - home
+      - removable-media
       - network
       - network-bind
       - wayland
-    #slots:
-    #  dbus-daemon:
-    #    interface: dbus
-    #    bus: session
-    #    name: com.moritzmolch.dlna-downloader
     common-id: com.moritzmolch.dlna-downloader
