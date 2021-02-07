@@ -10,16 +10,13 @@ parts:
   dlna-downloader:
     plugin: dump
     source: .
-    parse-info: [../../../project/com.moritzmolch.dlna-downloader.appdata.xml]
-    #override-pull: ../../../project/null.sh
-    #override-build: ../../../project/null.sh
-    #override-stage: ../project/null.sh
-    override-prime: ../project/override-prime.sh
+    parse-info: [../../../project/snap/local/com.moritzmolch.dlna-downloader.appdata.xml]
+    override-prime: ../project/snap/local/override-prime.sh
 
 apps:
   dlna-downloader:
     command: dlna-downloader
-    desktop: ../project/com.moritzmolch.dlna-downloader.desktop
+    desktop: ../project/snap/local/com.moritzmolch.dlna-downloader.desktop
     extensions: [gnome-3-34]
     plugs:
       - desktop

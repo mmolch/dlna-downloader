@@ -8,8 +8,9 @@ cd "${TmpDir}"
 cp "${ScriptDir}/com.moritzmolch.dlna-downloader.appdata.xml" "${TmpDir}/"
 cp "${ScriptDir}/com.moritzmolch.dlna-downloader.desktop" "${TmpDir}/"
 cp "${ScriptDir}/snapcraft.yaml" "${TmpDir}/"
+cp "${ScriptDir}/override-prime.sh" "${TmpDir}/"
 
-cp -r "${ScriptDir}/../../bin" "${TmpDir}/"
+mkdir "${TmpDir}/bin" && cp "${ScriptDir}/dlna-downloader" "${TmpDir}/bin/"
 cp -r "${ScriptDir}/../../share" "${TmpDir}/"
 
 snapcraft clean --use-lxd && \
