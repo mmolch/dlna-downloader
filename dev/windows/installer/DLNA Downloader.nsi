@@ -41,7 +41,7 @@
 ;Pages
 
   !insertmacro MUI_PAGE_WELCOME
-  !insertmacro MUI_PAGE_LICENSE "../../../LICENSE"
+  !insertmacro MUI_PAGE_LICENSE "share/dlna-downloader/GPL3.txt"
   !insertmacro MUI_PAGE_DIRECTORY
 
   ;Start Menu Folder Page Configuration
@@ -70,7 +70,12 @@ Section "Dummy Section" SecDummy
   SetOutPath "$INSTDIR"
   
   ;ADD YOUR OWN FILES HERE...
-  File /r "../runtime/*"
+  File /r "bin"
+  File /r "lib"
+  File /r "share"
+  File "*.dll"
+  File "*.exe"
+  File "*.zip"
   
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     

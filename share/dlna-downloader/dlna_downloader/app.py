@@ -7,17 +7,12 @@ from .settings import Settings
 from .transfer import Transfer
 from .transfers import Transfers
 
-
 from pyupnp import PyUpnp
 from pyupnp.services import ContentDirectory1ClientService
 
 import logging
 import os
 import threading
-
-data_dir = os.path.dirname(__file__)
-data_dir =  os.path.dirname(data_dir)
-locale_dir = os.path.join(data_dir, 'locale')
 
 import sys
 # Needed for gettext on Windows
@@ -28,8 +23,6 @@ if sys.platform.startswith('win'):
         os.environ['LANGUAGE'] = lang
 
 import gettext
-gettext.bindtextdomain('dlna-downloader', locale_dir)
-gettext.textdomain('dlna-downloader')
 _ = gettext.gettext
 
 #logging.basicConfig(level=logging.DEBUG)
@@ -40,18 +33,23 @@ logging.basicConfig(level=logging.INFO)
 
 
 class App(wx.App):
-    def __init__(self, *args, **kwargs):
-        wx.App.__init__(self, *args, **kwargs)
+    def __init__(self, data_dir, *args, **kwargs):
+
+        self.__data_dir = data_dir
+        gettext.bindtextdomain('dlna-downloader', self.GetFilePath('locale'))
+        gettext.textdomain('dlna-downloader')
 
         if wx.Port == '__WXGTK__':
             gtk_additions()
+
+        wx.App.__init__(self, *args, **kwargs)
+
 
 
     def OnInit(self):
         self.SetAppDisplayName("DLNA Downloader")
 
         self.settings = Settings()
-        self.__data_dir = data_dir
 
         self.__running = True
         self.transfers = Transfers()

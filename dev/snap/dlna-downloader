@@ -16,5 +16,5 @@ sys.path.insert(0, os.path.join(appDir, 'usr', 'lib', platform.machine()+'-linux
 
 from dlna_downloader import App
 
-app = App()
+app = App(data_dir)
 app.MainLoop()
