@@ -2,6 +2,7 @@
 
 import os
 import sys
+import platform
 
 appDir = os.path.realpath(__file__)
 appDir = os.path.dirname(appDir)
@@ -11,7 +12,7 @@ dataDir= os.path.join(appDir, 'share', 'dlna-downloader')
 sys.path.insert(0, dataDir)
 
 sys.path.insert(0, os.path.join(appDir, 'usr', 'lib', 'python3', 'dist-packages'))
-sys.path.insert(0, os.path.join(appDir, 'usr', 'lib', 'x86_64-linux-gnu'))
+sys.path.insert(0, os.path.join(appDir, 'usr', 'lib', platform.machine()+'-linux-gnu'))
 
 from dlna_downloader import App
 
