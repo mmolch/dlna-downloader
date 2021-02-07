@@ -17,7 +17,7 @@ parts:
 apps:
   dlna-downloader:
     command: dlna-downloader
-    desktop: ../project/snap/local/com.moritzmolch.dlna-downloader.desktop
+    desktop: ${SNAPCRAFT_PROJECT_DIR}/snap/local/com.moritzmolch.dlna-downloader.desktop
     extensions: [gnome-3-34]
     plugs:
       - home
