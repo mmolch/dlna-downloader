@@ -1,0 +1,161 @@
+#, python-format
+msgid "%(num)d Directory"
+msgid_plural "%(num)d Directories"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(num)d File"
+msgid_plural "%(num)d Files"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "&About…"
+msgstr ""
+
+msgid "&Quit"
+msgstr ""
+
+msgid "&Settings…"
+msgstr ""
+
+msgid ""
+"A file is currently downloading.\n"
+"The file will be incomplete if you close the application.\n"
+"Are you sure you want to quit?"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "Channel"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Connecting…"
+msgstr ""
+
+msgid "Created by Moritz Molch"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Devices"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Download in progress"
+msgstr ""
+
+msgid "Download-Directory"
+msgstr ""
+
+msgid "Downloads"
+msgstr ""
+
+msgid "Duration"
+msgstr ""
+
+msgid "Failed to read directory"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "No device selected"
+msgstr ""
+
+msgid ""
+"Please choose a device from the device list.\n"
+"If your device isn't shown, click on \"Refresh\" to\n"
+"manually ask for responses from all DLNA-enabled\n"
+"devices whithin your network."
+msgstr ""
+
+msgid "Queued"
+msgstr ""
+
+msgid "Reading directory…"
+msgstr ""
+
+msgid "Refresh"
+msgstr ""
+
+msgid "Reload"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Search for DLNA-enabled devices in the network"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Source"
+msgstr ""
+
+msgid "Start"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Stop"
+msgstr ""
+
+msgid "Stopped"
+msgstr ""
+
+msgid ""
+"The currently downloading file will be incomplete if you stop the "
+"download.\n"
+"Please note that downloads can not be resumed. \n"
+"Do you want to stop the download nevertheless?"
+msgstr ""
+
+msgid "The directory is empty"
+msgstr ""
+
+msgid ""
+"The file is currently downloading.\n"
+"The file will be incomplete if you remove the download.\n"
+"Do you want to remove the download nevertheless?"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "View License"
+msgstr ""
+
+msgid "Waiting for device…"
+msgstr ""
+
+msgid "remaining"
+msgstr ""
+
+msgid "{} active"
+msgstr ""
+
+msgid "{} completed"
+msgstr ""
+
+msgid "{} queued"
+msgstr ""
+
+msgid "© 2021 | License: GPL 3"
+msgstr ""
+
