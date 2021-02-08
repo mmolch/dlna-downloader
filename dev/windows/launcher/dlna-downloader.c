@@ -32,9 +32,9 @@ int wmain(int argc, wchar_t const *argv[])
 
     dirname(appDir);
 
-    int scriptPath_size = pzs_cat(NULL, appDir, "\\bin\\", bname, NULL);
+    int scriptPath_size = pzs_cat(NULL, appDir, "\\", bname, ".zip", NULL);
     char scriptPath[scriptPath_size];
-    pzs_cat((char*)&scriptPath, appDir, "\\bin\\", bname, NULL);
+    pzs_cat((char*)&scriptPath, appDir, "\\", bname, ".zip", NULL);
 
     if (argc <= 0) {
         return 0;

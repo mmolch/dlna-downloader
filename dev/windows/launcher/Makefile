@@ -10,7 +10,7 @@ WINDRES_FLAGS=-J rc -O coff
 all: dlna-downloader.exe
 
 dlna-downloader.exe: dlna-downloader.c whereami.c dlna-downloader.res
-	$(CC_PREFIX)$(CC) $(CC_FLAGS) $(CC_FLAGS_WINDOWS) -o $@ $^ ../../../python34.dll
+	$(CC_PREFIX)$(CC) $(CC_FLAGS) $(CC_FLAGS_WINDOWS) -o $@ $^ ../runtime/python34.dll
 
 dlna-downloader.res: dlna-downloader.rc
 	$(WINDRES_PREFIX)$(WINDRES) $(WINDRES_FLAGS) -o $@ $^
