@@ -9,5 +9,12 @@ app_dir = os.path.dirname(app_dir)
 data_dir= os.path.join(app_dir, 'share', 'dlna-downloader')
 sys.path.insert(0, data_dir)
 
+is_snap = os.getenv('SNAP_NAME') != None
+if is_snap:
+    import platform
+    sys.path.insert(0, os.path.join(app_dir, 'usr', 'lib', 'python3', 'dist-packages'))
+    sys.path.insert(0, os.path.join(app_dir, 'usr', 'lib', platform.machine()+'-linux-gnu'))
+
+
 from python.__main__ import main
 main()
