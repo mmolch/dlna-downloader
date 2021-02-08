@@ -41,7 +41,7 @@
 ;Pages
 
   !insertmacro MUI_PAGE_WELCOME
-  !insertmacro MUI_PAGE_LICENSE "share/dlna-downloader/GPL3.txt"
+  !insertmacro MUI_PAGE_LICENSE "GPL3.txt"
   !insertmacro MUI_PAGE_DIRECTORY
 
   ;Start Menu Folder Page Configuration
@@ -52,6 +52,8 @@
   !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 
   !insertmacro MUI_PAGE_INSTFILES
+
+  !define MUI_FINISHPAGE_RUN "$INSTDIR\dlna-downloader.exe"
   !insertmacro MUI_PAGE_FINISH
 
   !insertmacro MUI_UNPAGE_CONFIRM
@@ -70,12 +72,7 @@ Section "Dummy Section" SecDummy
   SetOutPath "$INSTDIR"
   
   ;ADD YOUR OWN FILES HERE...
-  File /r "bin"
-  File /r "lib"
-  File /r "share"
-  File "*.dll"
-  File "*.exe"
-  File "*.zip"
+  File /r /x "*.nsi" /x "*.ico" "*"
   
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     
@@ -92,6 +89,13 @@ Section "Dummy Section" SecDummy
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\DLNA Downloader" \
+                  "DisplayName" "DLNA Downloader"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\DLNA Downloader" \
+                  "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\DLNA Downloader" \
+                 "QuietUninstallString" "$\"$INSTDIR\uninstall.exe$\" /S"
+
 SectionEnd
 
 ;--------------------------------
@@ -107,5 +111,7 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\$StartMenuFolder"
 
   DeleteRegKey /ifempty HKCU "Software\DLNA Downloader"
+
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\DLNA Downloader"
 
 SectionEnd
