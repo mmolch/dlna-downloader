@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Name=DLNA Downloader
+Comment=Download media from DLNA-enabled devices
+Icon=/usr/share/dlna-downloader/icons/256/dlna-downloader.png
+Exec=/usr/bin/dlna-downloader
+Categories=AudioVideo;

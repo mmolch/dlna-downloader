@@ -1,0 +1,16 @@
+Source: dlna-downloader
+Section: Video
+Priority: extra
+Maintainer: Moritz Molch <mail@moritzmolch.de>
+Build-Depends:  debhelper (>= 7.0.50~)
+Standards-Version: 3.9.2
+Homepage: http://moritzmolch.com/apps/dlna-downloader
+
+Package: dlna-downloader
+Architecture: all
+Recommends:
+Depends: python3-wxgtk4.0
+Description: Download videos, music and photos from DLNA-enabled devices such as HDD VCRs or TVs
+ The DLNA Downloader allows you to browse and download media from DLNA-enabled devices.
+ If supported by the device, the DLNA Downloader shows you not only the title,
+ but also the duration, size, date and channel that the program was recorded on.

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+while IFS= read -r path; do
+    rm "${path}"
+done <<<$(find /usr/share/dlna-downloader/python -type f -name '*.pyc')
+
+while IFS= read -r path; do
+    rmdir "${path}"
+done <<<$(find /usr/share/dlna-downloader/python -type d -name '__pycache__')
