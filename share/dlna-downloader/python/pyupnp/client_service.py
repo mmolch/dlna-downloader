@@ -78,7 +78,7 @@ class ClientService(Object):
                 'Accept-Ranges: bytes',
                 'CONTENT-TYPE: text/xml; charset="utf-8"',
                 'SOAPACTION: "{}#{}"'.format(self.URN, action),
-                'USER-AGENT: {}/{}'.format('UPNP', '1.0'),
+                'USER-AGENT: {}/{} UPnP/2.0 {}/{}'.format(self.__upnp._platform_system, self.__upnp._platform_release, self.__upnp._user_agent, self.__upnp._user_agent_version),
                 '',
                 envelope
             ])

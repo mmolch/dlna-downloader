@@ -67,10 +67,10 @@ class PyUpnp(Object):
         self.__state = self.State.STOPPED
         self.__running = False
 
-        self.__platform_system = platform.system()
-        self.__platform_release = platform.release()
-        self.__user_agent = user_agent
-        self.__user_agent_version = user_agent_version
+        self._platform_system = platform.system()
+        self._platform_release = platform.release()
+        self._user_agent = user_agent
+        self._user_agent_version = user_agent_version
 
         self.__search_timeout = 3
         
@@ -246,7 +246,7 @@ class PyUpnp(Object):
     def _CreateSearchPacket(self, search_target='ssdp:all'):
         packet = "\r\n".join([
             'M-SEARCH * HTTP/1.1',
-            'User-Agent: {}/{} UPnP/1.0 {}/{}'.format(self.__platform_system, self.__platform_release, self.__user_agent, self.__user_agent_version),
+            'User-Agent: {}/{} UPnP/1.0 {}/{}'.format(self._platform_system, self._platform_release, self._user_agent, self._user_agent_version),
             'HOST: 239.255.255.250:1900',
             'Accept: */*',
             'MAN: "ssdp:discover"',
