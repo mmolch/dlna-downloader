@@ -72,14 +72,13 @@ class ClientService(Object):
 
     def _CreateControlPacket(self, action, envelope):
         packet = "\r\n".join([
-                'POST {} HTTP/1.0'.format(path_from_url(self.control_url)),
-                'User-Agent: {}/{}'.format('UPNP', '1.0'),
-                'Accept: */*',
-                'Content-Type: text/xml; charset="utf-8"',
+                'POST {} HTTP/1.1'.format(path_from_url(self.control_url)),
                 'HOST: {}:{}'.format(self.device.ip, self.device.port),
-                'Content-Length: {}'.format(len(envelope)),
+                'CONTENT-LENGTH: {}'.format(len(envelope)),
+                'Accept-Ranges: bytes',
+                'CONTENT-TYPE: text/xml; charset="utf-8"',
                 'SOAPACTION: "{}#{}"'.format(self.URN, action),
-                'Connection: close',
+                'USER-AGENT: {}/{}'.format('UPNP', '1.0'),
                 '',
                 envelope
             ])
@@ -108,6 +107,8 @@ class ClientService(Object):
 {fields}
         </u:{action}>
     </s:Body>
-</s:Envelope>""".format(action=action, urn=self.URN, fields=fields)
+</s:Envelope>
+
+""".format(action=action, urn=self.URN, fields=fields)
 
         return envelope
