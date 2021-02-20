@@ -1,46 +1,134 @@
-from .tcp_request import TcpRequest
-from .util import http_header_to_dict
+from.http_request import HttpRequest
+from .object import Object
 
+from enum import Enum
 from xml.etree import ElementTree
+import html.parser
 
-class SoapRequest(TcpRequest):
-    def __init__(self, *args, **kwargs):
-        TcpRequest.__init__(self, *args, **kwargs)
+class SoapRequest(Object):
+    class Event(Object.Event):
+        STATE_CHANGED = 1
 
-    
-    @property
-    def soap_response(self):
-        if not self.response:
-            return None
 
-        if self.error_message:
-            return None
+    class State(Enum):
+        INIT = 1
+        RUNNING = 2
+        FINISHED = 3
+        ERROR = 4
+        CANCELED = 5
+
+
+    def __init__(self, address, url, urn, action, data, timeout=60):
+        Object.__init__(self)
+
+        self.__state = self.State.INIT
+        self.__error_message = ''
+        self.__soap_body = None
+        
+        self.__envelope = self.__CreateEnvelope(urn, action, data)
+        self.__headers = {
+            'CONTENT-TYPE' : 'text/xml; charset="utf-8"',
+            'SOAPACTION' : '"{}#{}"'.format(urn, action),
+        }
+
+        self.__http_request = HttpRequest('POST', address, url, self.__headers, self.__envelope, timeout)
+        self.__http_request.Bind(HttpRequest.Event.STATE_CHANGED, self.__OnHttpRequestStateChanged)
+
+
+    def __OnHttpRequestStateChanged(self, state):
+        if state == HttpRequest.State.INIT:
+            self.__SetState(self.State.INIT)
+            return
+        elif state == HttpRequest.State.RUNNING:
+            self.__SetState(self.State.RUNNING)
+            return
+        elif state == HttpRequest.State.ERROR:
+            self.__error_message = self.__http_request.error_message
+            self.__SetState(self.State.ERROR)
+            return
+        elif state == HttpRequest.State.CANCELED:
+            self.__SetState(self.State.CANCELED)
+            return
 
         try:
-            header, xml = self.response.split(b'\r\n\r\n', 1)
-            xml = xml.decode('utf-8')
-            header = http_header_to_dict(header)
-            print(header)
+            doc = ElementTree.fromstring(self.__http_request.response_body)
 
-            self._logger.debug(xml)
-            doc = ElementTree.fromstring(xml)
             namespaces = {}
             namespaces['s'] = "http://schemas.xmlsoap.org/soap/envelope/"
             namespaces['u'] = "urn:schemas-upnp-org:control-1-0"
-            body = doc.find('s:Body', namespaces)
+            self.__soap_body = doc.find('s:Body', namespaces)
 
-            fault =  body.find('s:Fault', namespaces)
-            if not fault:
-                return body
+            fault =  self.__soap_body.find('s:Fault', namespaces)
+            if fault:
+                try:
+                    self.__error_message = fault.find('detail/u:UPnPError/u:errorDescription', namespaces).text
+                except:
+                    self.__error_message = "Failed to decode error message"
 
-            try:
-                self._error_message = fault.find('detail/u:UPnPError/u:errorDescription', namespaces).text
-            except:
-                self._error_message = "Failed to decode error message"
-            
-            return None
+                self._logger.warning(self.__error_message)
+                self.__SetState(self.State.ERROR)
+                return
 
+            self.__SetState(self.State.FINISHED)
+
+        
         except Exception as e:
-            self._logger.warning("Failed to decode SOAP response: {}".format(str(e)))
-            self._error_message = str(e)
-            return None
+            self.__error_message = str(e)
+            self._logger.warning(e)
+            self.__SetState(self.State.ERROR)
+
+
+    def Cancel(self):
+        self.__http_request.Cancel()
+
+
+    def Request(self):
+        self.__http_request.Request()
+
+
+    def __CreateEnvelope(self, urn, action, data):
+        fields = ''
+        first = True
+        for tag, value in data.items():
+            if first:
+                first = False
+            else:
+                fields += '\n'
+
+            fields += '<{tag}>{value}</{tag}>'.format(tag=tag, value=value)
+
+        envelope = """<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:{action} xmlns:u="{urn}">
+{fields}
+</u:{action}>
+</s:Body>
+</s:Envelope>
+
+""".format(action=action, urn=urn, fields=fields)
+
+        return envelope
+
+
+    def __SetState(self, state):
+        if self.state == state:
+            return
+
+        self.__state = state
+        self.Emit(self.Event.STATE_CHANGED, state)
+
+
+    @property
+    def state(self):
+        return self.__state
+
+
+    @property
+    def error_message(self):
+        return self.__error_message
+
+
+    @property
+    def soap_body(self):
+        return self.__soap_body

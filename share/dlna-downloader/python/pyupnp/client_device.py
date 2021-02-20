@@ -33,11 +33,13 @@ class ClientDevice(Object):
         # Required
         try:
             self.__location = http_header['LOCATION']
+            self._logger.debug('LOCATION: {}'.format(self.__location))
             self.__ip = host_from_url(self.location)
             self.__port = port_from_url(self.location)
             self._maxage = int(http_header['CACHE-CONTROL'].split('=')[1])
             self._timeout = self._maxage
             self.__usn = http_header['USN']
+            self._logger.debug('USN: {}'.format(self.__usn))
             self.__uuid = self.usn.split(':')[1]
 
         except KeyError as e:

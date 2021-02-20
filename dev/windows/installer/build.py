@@ -40,7 +40,7 @@ with TemporaryDirectory() as temp_dir:
 
     #Copy Windows runtime
     os.chdir(join(src_dir, 'dev', 'windows', 'runtime'))
-    shutil.copy('dlna-downloader.exe', dist_dir)
+    shutil.copy('dlna-downloader_release.exe', os.path.join(dist_dir, 'dlna-downloader.exe'))
 
     for file in pathlib.Path().glob('**/*.dll'):
         copy_file(str(file), dist_dir)

@@ -25,17 +25,20 @@ if sys.platform.startswith('win'):
 import gettext
 _ = gettext.gettext
 
-#logging.basicConfig(level=logging.DEBUG)
-wx.Log.SetLogLevel(0)
-#logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
-logging.basicConfig(level=logging.INFO)
-
+wx.Log.SetLogLevel(1)
 
 
 class App(wx.App):
-    def __init__(self, data_dir, *args, **kwargs):
+    def __init__(self, data_dir, parsed_args, *args, **kwargs):
 
         self.__data_dir = data_dir
+        self.__args = parsed_args
+
+        if self.args.debug:
+            logging.basicConfig(level=logging.DEBUG)
+        else:
+            logging.basicConfig(level=logging.INFO)
+
         gettext.bindtextdomain('dlna-downloader', self.GetFilePath('locale'))
         gettext.textdomain('dlna-downloader')
 
@@ -43,7 +46,6 @@ class App(wx.App):
             gtk_additions()
 
         wx.App.__init__(self, *args, **kwargs)
-
 
 
     def OnInit(self):
@@ -74,6 +76,11 @@ class App(wx.App):
     @property
     def data_dir(self):
         return self.__data_dir
+
+
+    @property
+    def args(self):
+        return self.__args
 
 
     def GetFilePath(self, *args):

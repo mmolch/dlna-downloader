@@ -1,8 +1,4 @@
 from .object import Object
-from .tcp_request import TcpRequest
-from .util import path_from_url, host_from_url, port_from_url
-import httplib2
-
 
 class ClientService(Object):
 
@@ -26,9 +22,14 @@ class ClientService(Object):
         # All fields are required by the UPNP specification
         try:
             self.__service_id = device.path_to_url(device.FindInDescription('d:serviceId', description).text)
+            self._logger.debug('serviceID: {}'.format(self.__service_id))
             self.__scpd_url =  device.path_to_url(device.FindInDescription('d:SCPDURL', description).text)
+            self._logger.debug('SCPDURL: {}'.format(self.__scpd_url))
             self.__contol_url =  device.path_to_url(device.FindInDescription('d:controlURL', description).text)
+            self._logger.debug('controlURL: {}'.format(self.__contol_url))
             self.__event_sub_url =  device.path_to_url(device.FindInDescription('d:eventSubURL', description).text)
+            self._logger.debug('eventSubURL: {}'.format(self.__event_sub_url))
+            
         except Exception as e:
             self._logger.warning("Failed to create service: {}".format(str(e)))
             return
@@ -70,59 +71,3 @@ class ClientService(Object):
     def device(self):
         return self.__device
 
-
-    def _UpnpRequest(self, action, envelope):
-        http = httplib2.Http(timeout=1)
-        headers = {
-            'SOAPACTION' : '"{}#{}"'.format(self.URN, action),
-            'CONTENT-TYPE' : 'text/xml; charset="utf-8"'
-        }
-
-
-        return http.request('http://{}:{}{}'.format(self.device.ip, self.device.port, path_from_url(self.control_url)),
-                            method='POST', body=envelope, headers=headers)
-
-
-    def _CreateControlPacket(self, action, envelope):
-        packet = "\r\n".join([
-                'POST {} HTTP/1.0'.format(path_from_url(self.control_url)),
-                'HOST: {}:{}'.format(self.device.ip, self.device.port),
-                'CONTENT-LENGTH: {}'.format(len(envelope)),
-                'Accept-Ranges: bytes',
-                'CONTENT-TYPE: text/xml; charset="utf-8"',
-                'SOAPACTION: "{}#{}"'.format(self.URN, action),
-                'USER-AGENT: {}/{} UPnP/2.0 {}/{}'.format(self.__upnp._platform_system, self.__upnp._platform_release, self.__upnp._user_agent, self.__upnp._user_agent_version),
-                'CONNECTION: close',
-                '',
-                envelope
-            ])
-
-        packet = packet.encode('utf-8')
-
-        self._logger.debug(packet)
-        return packet
-
-
-    def _CreateEnvelope(self, action, data):
-        fields = ''
-        first = True
-        for tag, value in data.items():
-            if first:
-                first = False
-            else:
-                fields += '\n'
-
-            fields += '            <{tag}>{value}</{tag}>'.format(tag=tag, value=value)
-
-        envelope = """<?xml version="1.0" encoding="utf-8"?>
-<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-    <s:Body>
-        <u:{action} xmlns:u="{urn}">
-{fields}
-        </u:{action}>
-    </s:Body>
-</s:Envelope>
-
-""".format(action=action, urn=self.URN, fields=fields)
-
-        return envelope

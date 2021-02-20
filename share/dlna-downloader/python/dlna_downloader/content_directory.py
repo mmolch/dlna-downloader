@@ -189,21 +189,19 @@ class ContentDirectory(Object):
         self.__browse_request = service.BrowseRequest(object_id=self.object_id)
         self.__browse_request.Bind(SoapRequest.Event.STATE_CHANGED, self.__OnRequestStateChanged)
         self.__SetState(self.State.CONNECTING)
-        self.__browse_request.Send()        
+        self.__browse_request.Request()        
 
 
     def __OnRequestStateChanged(self, state):
         if state == SoapRequest.State.CANCELED:
             self.__SetState(self.State.IDLE)
         elif state == SoapRequest.State.ERROR:
-            self.__error_message = self.__browse_request._error_message
+            self.__error_message = self.__browse_request.error_message
             self.__SetState(self.State.ERROR)
-        elif state == SoapRequest.State.BUSY:
-            return
-        elif state == SoapRequest.State.IDLE:
-            response = self.__browse_request.soap_response
+        elif state == SoapRequest.State.FINISHED:
+            response = self.__browse_request.soap_body
             if not response:
-                self.__error_message = self.__browse_request._error_message
+                self.__error_message = self.__browse_request.error_message
                 self.__SetState(self.State.ERROR)
                 return
 
@@ -315,7 +313,7 @@ class ContentDirectory(Object):
                 self.__browse_request.Bind(SoapRequest.Event.STATE_CHANGED, self.__OnRequestStateChanged)
                 self.__SetState(self.State.DOWNLOADING)
                 self.Emit(self.Event.GOT_MORE_ITEMS)
-                self.__browse_request.Send()
+                self.__browse_request.Request()
             else:
                 self.__SetState(self.State.IDLE)
 

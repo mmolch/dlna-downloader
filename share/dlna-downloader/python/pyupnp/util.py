@@ -1,5 +1,4 @@
 
-
 def path_from_url(url):
    return '/'+url.split('/', 3)[3]
 
