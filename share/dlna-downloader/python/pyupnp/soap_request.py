@@ -1,4 +1,5 @@
 from .tcp_request import TcpRequest
+from .util import http_header_to_dict
 
 from xml.etree import ElementTree
 
@@ -16,7 +17,11 @@ class SoapRequest(TcpRequest):
             return None
 
         try:
-            xml = self.response.split(b'\r\n\r\n', 1)[1].decode('utf-8')
+            header, xml = self.response.split(b'\r\n\r\n', 1)
+            xml = xml.decode('utf-8')
+            header = http_header_to_dict(header)
+            print(header)
+
             self._logger.debug(xml)
             doc = ElementTree.fromstring(xml)
             namespaces = {}

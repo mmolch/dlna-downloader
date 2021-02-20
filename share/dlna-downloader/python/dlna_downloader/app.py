@@ -25,10 +25,10 @@ if sys.platform.startswith('win'):
 import gettext
 _ = gettext.gettext
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 wx.Log.SetLogLevel(0)
 #logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
-#logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
 
 

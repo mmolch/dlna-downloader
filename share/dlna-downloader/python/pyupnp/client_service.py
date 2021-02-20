@@ -1,6 +1,7 @@
 from .object import Object
 from .tcp_request import TcpRequest
 from .util import path_from_url, host_from_url, port_from_url
+import httplib2
 
 
 class ClientService(Object):
@@ -70,15 +71,28 @@ class ClientService(Object):
         return self.__device
 
 
+    def _UpnpRequest(self, action, envelope):
+        http = httplib2.Http(timeout=1)
+        headers = {
+            'SOAPACTION' : '"{}#{}"'.format(self.URN, action),
+            'CONTENT-TYPE' : 'text/xml; charset="utf-8"'
+        }
+
+
+        return http.request('http://{}:{}{}'.format(self.device.ip, self.device.port, path_from_url(self.control_url)),
+                            method='POST', body=envelope, headers=headers)
+
+
     def _CreateControlPacket(self, action, envelope):
         packet = "\r\n".join([
-                'POST {} HTTP/1.1'.format(path_from_url(self.control_url)),
+                'POST {} HTTP/1.0'.format(path_from_url(self.control_url)),
                 'HOST: {}:{}'.format(self.device.ip, self.device.port),
                 'CONTENT-LENGTH: {}'.format(len(envelope)),
                 'Accept-Ranges: bytes',
                 'CONTENT-TYPE: text/xml; charset="utf-8"',
                 'SOAPACTION: "{}#{}"'.format(self.URN, action),
                 'USER-AGENT: {}/{} UPnP/2.0 {}/{}'.format(self.__upnp._platform_system, self.__upnp._platform_release, self.__upnp._user_agent, self.__upnp._user_agent_version),
+                'CONNECTION: close',
                 '',
                 envelope
             ])
