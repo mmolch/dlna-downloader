@@ -1,6 +1,6 @@
 from ..client_service import ClientService
 from ..soap_request import SoapRequest
-from ..util import path_from_url
+from ..util import path_from_url, host_from_url, port_from_url
 
 
 class ContentDirectory1ClientService(ClientService):
@@ -21,4 +21,4 @@ class ContentDirectory1ClientService(ClientService):
         data['RequestedCount'] = requested_count
         data['SortCriteria'] = sort_criteria
 
-        return SoapRequest((self.device.ip, self.device.port), path_from_url(self.control_url), self.URN, 'Browse', data)
+        return SoapRequest((host_from_url(self.control_url), port_from_url(self.control_url)), path_from_url(self.control_url), self.URN, 'Browse', data)
