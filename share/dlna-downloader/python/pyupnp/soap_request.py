@@ -2,8 +2,9 @@ from.http_request import HttpRequest
 from .object import Object
 
 from enum import Enum
-from xml.etree import ElementTree
 import html.parser
+from xml.etree import ElementTree
+
 
 class SoapRequest(Object):
     class Event(Object.Event):

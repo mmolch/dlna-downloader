@@ -4,6 +4,7 @@ from enum import Enum
 import httplib2
 import logging
 import socket
+import sys
 from threading import Thread
 
 
@@ -58,14 +59,25 @@ class HttpRequest(Object):
 
     def __WorkerThread(self):
         try:
+            if logging.root.level == logging.DEBUG:
+                self.__connection.set_debuglevel(10)
+                stdout_tmp = sys.stdout
+                sys.stdout = sys.stderr
+
             self.__connection.request(self.__method, self.__url, self.__body, self.__headers)
+
+            if logging.root.level == logging.DEBUG:
+                self.__connection.set_debuglevel(10)
+                sys.stdout = stdout_tmp
+
+            self.__connection.set_debuglevel(0)
 
             response = self.__connection.getresponse()
             self.__response_headers = response.headers
-            self._logger.debug(self.__response_headers)
+            self._logger.debug('RECV: {}'.format(self.__response_headers))
 
             self.__response_body = response.read()
-            self._logger.debug(self.__response_body)
+            self._logger.debug('RECV: {}'.format(self.__response_body))
 
             self.__SetState(self.State.FINISHED)
 
