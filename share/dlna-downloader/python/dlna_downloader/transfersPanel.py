@@ -12,6 +12,7 @@ from time import sleep
 
 import gettext
 _ = gettext.gettext
+n_ = gettext.ngettext
 
 class TransfersListView(wx.ListView):
     class Column(IntEnum):
@@ -32,9 +33,9 @@ class TransfersListView(wx.ListView):
         self.InsertColumn(TransfersListView.Column.STATUS, _("Status"))
 
         app = wx.GetApp()
-        app.transfers.Bind(Transfers.Event.ADDED, lambda transfer: wx.CallAfter(self.OnTransferAdded, transfer))
-        app.transfers.Bind(Transfers.Event.REMOVED, lambda transfer: wx.CallAfter(self.OnTransferRemoved, transfer))
-        app.transfers.Bind(Transfers.Event.STATE_CHANGED, lambda state: wx.CallAfter(self.OnStateChanged, state))
+        app.transfers.Bind(Transfers.Event.ADDED, lambda emitter, transfer: wx.CallAfter(self.OnTransferAdded, emitter, transfer))
+        app.transfers.Bind(Transfers.Event.REMOVED, lambda emitter, transfer: wx.CallAfter(self.OnTransferRemoved, emitter, transfer))
+        app.transfers.Bind(Transfers.Event.STATE_CHANGED, lambda emitter, state: wx.CallAfter(self.OnStateChanged, emitter, state))
 
         self.Bind(wx.EVT_SIZE, self.OnResize)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.__OnSelectionChanged)
@@ -59,19 +60,19 @@ class TransfersListView(wx.ListView):
         event.Skip()
 
 
-    def OnTransferAdded(self, transfer):
+    def OnTransferAdded(self, transfers, transfer):
         self.SetItemCount(len(wx.GetApp().transfers.transfers))
 
         self.__OnSelectionChanged(None)
 
 
-    def OnTransferRemoved(self, transfer):
+    def OnTransferRemoved(self, transfers, transfer):
         self.SetItemCount(len(wx.GetApp().transfers.transfers))
 
         self.__OnSelectionChanged(None)
 
 
-    def OnStateChanged(self, state):
+    def OnStateChanged(self, transfers, state):
         if state == Transfers.State.IDLE:
             if len(wx.GetApp().transfers.transfers) > 0:
                 self.GetParent().button_stop.SetLabel(_("Start"))
@@ -182,15 +183,15 @@ class TransfersPanel(wx.Control):
         self.SetSizerAndFit(sizer1)
 
         app = wx.GetApp()
-        app.transfers.Bind(Transfers.Event.ADDED, lambda transfer: wx.CallAfter(self.__OnTransferAdded, transfer))
-        app.transfers.Bind(Transfers.Event.REMOVED, lambda transfer: wx.CallAfter(self.__OnTransferRemoved, transfer))
-        app.transfers.Bind(Transfers.Event.STATE_CHANGED, lambda state: wx.CallAfter(self.__OnStateChanged, state))
+        app.transfers.Bind(Transfers.Event.ADDED, lambda emitter, transfer: wx.CallAfter(self.__OnTransferAdded, emitter, transfer))
+        app.transfers.Bind(Transfers.Event.REMOVED, lambda emitter, transfer: wx.CallAfter(self.__OnTransferRemoved, emitter, transfer))
+        app.transfers.Bind(Transfers.Event.STATE_CHANGED, lambda emitter, state: wx.CallAfter(self.__OnStateChanged, emitter, state))
         app.settings.Bind(Settings.Event.CHANGED, self.__OnSettingsChanged)
 
-        self.__OnSettingsChanged('download-directory', app.settings.Get('download-directory'))
+        self.__OnSettingsChanged(None, 'download-directory', app.settings.Get('download-directory'))
 
 
-    def __OnSettingsChanged(self, key, value):
+    def __OnSettingsChanged(self, settings, key, value):
         if key == 'download-directory':
             self.title.SetLabel("{} ({})".format(_("Downloads"), value))
 
@@ -211,13 +212,16 @@ class TransfersPanel(wx.Control):
             pass
 
         if num_active > 0:
-            infos.append(_("{} active").format(num_active))
+            active = n_("%(num)d active", "%(num)d active", num_active) % {'num':num_active}
+            infos.append(active)
 
         if num_queued > 0:
-            infos.append(_("{} queued").format(num_queued))
+            queued = n_("%(num)d queued", "%(num)d queued", num_queued) % {'num':num_queued}
+            infos.append(queued)
 
         if wx.GetApp().transfers.completed > 0:
-            infos.append(_("{} completed").format(wx.GetApp().transfers.completed))
+            completed = n_("%(num)d completed", "%(num)d completed", wx.GetApp().transfers.completed) % {'num':wx.GetApp().transfers.completed}
+            infos.append(completed)
 
         if len(infos) > 0:
             self.title.SetLabel(_('Downloads')+' ({})'.format(', '.join(infos)))
@@ -225,19 +229,19 @@ class TransfersPanel(wx.Control):
             self.title.SetLabel(_('Downloads'))
 
 
-    def __OnTransferAdded(self, transfer):
+    def __OnTransferAdded(self, transfers, transfer):
         self.__UpdateStopButton()
         self._UpdateTitle()
         self.Refresh()
 
 
-    def __OnTransferRemoved(self, transfer):
+    def __OnTransferRemoved(self, transfers, transfer):
         self.__UpdateStopButton()
         self._UpdateTitle()
         self.Refresh()
 
 
-    def __OnStateChanged(self, state):
+    def __OnStateChanged(self, transfers, state):
         self.__UpdateStopButton()
         self._UpdateTitle()
         self.Refresh()

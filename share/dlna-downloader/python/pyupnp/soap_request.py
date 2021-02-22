@@ -38,7 +38,7 @@ class SoapRequest(Object):
         self.__http_request.Bind(HttpRequest.Event.STATE_CHANGED, self.__OnHttpRequestStateChanged)
 
 
-    def __OnHttpRequestStateChanged(self, state):
+    def __OnHttpRequestStateChanged(self, http_request, state):
         if state == HttpRequest.State.INIT:
             self.__SetState(self.State.INIT)
             return

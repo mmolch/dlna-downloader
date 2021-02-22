@@ -76,7 +76,7 @@ class Transfer(Object):
             return
 
         self.__state = state
-        self.Emit(self.Event.STATE_CHANGED, self, state)
+        self.Emit(self.Event.STATE_CHANGED, state)
 
 
     def __WorkerThread(self):

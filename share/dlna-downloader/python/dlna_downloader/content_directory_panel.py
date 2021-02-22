@@ -43,7 +43,7 @@ class ContentDirectoryListView(wx.ListView):
         self.__columns = []
         self.__directory = wx.GetApp().directory
 
-        self.__directory.Bind(ContentDirectory.Event.STATE_CHANGED, lambda state: wx.CallAfter(self.OnDirectoryStateChanged, state))
+        self.__directory.Bind(ContentDirectory.Event.STATE_CHANGED, lambda emitter, state: wx.CallAfter(self.OnDirectoryStateChanged, emitter, state))
 
         self.EnableAlternateRowColours()
         self.Bind(wx.EVT_SIZE, self.OnResize)
@@ -161,9 +161,11 @@ class ContentDirectoryListView(wx.ListView):
             self.Download()
 
 
-    def OnDirectoryStateChanged(self, state):
+    def OnDirectoryStateChanged(self, content_directory, state):
         self.Freeze()
         if state == ContentDirectory.State.IDLE:
+            self.Rebuild()
+        elif state == ContentDirectory.State.CANCELED:
             self.Rebuild()
         else:
             self.SetItemCount(0)
@@ -431,7 +433,7 @@ class LoadDirectoryPanel(wx.Panel):
     def __init__(self, *args, **kwargs):
         wx.Panel.__init__(self, *args, **kwargs)
 
-        wx.GetApp().directory.Bind(ContentDirectory.Event.GOT_MORE_ITEMS, lambda: wx.CallAfter(self.__OnGotMoreItems))
+        wx.GetApp().directory.Bind(ContentDirectory.Event.GOT_MORE_ITEMS, lambda emitter: wx.CallAfter(self.__OnGotMoreItems, emitter))
 
         self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
         color = MixColors(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW),
@@ -460,7 +462,7 @@ class LoadDirectoryPanel(wx.Panel):
         self.SetSizer(outersizer)
 
 
-    def __OnGotMoreItems(self):
+    def __OnGotMoreItems(self, content_directory):
         dir = wx.GetApp().directory
         wx.CallAfter(self.gauge.SetValue, len(dir.items))
 
@@ -545,7 +547,7 @@ class WelcomePanel(wx.Panel):
         sizer2.Add(0, font_large.GetPixelSize().height/2)
 
 
-        text2 = wx.StaticText(self, label=_("Please choose a device from the device list.\nIf your device isn't shown, click on \"Refresh\" to\nmanually ask for responses from all DLNA-enabled\ndevices whithin your network."))
+        text2 = wx.StaticText(self, label=_("Please select a device from the device-list.\nIf your device isn't shown, click on \"Refresh\" to discover\nnewly added devices in your local network."))
         sizer2.Add(text2,1, wx.EXPAND)
 
         sizer.Add(sizer2, 1, wx.CENTER)
@@ -563,8 +565,8 @@ class ContentDirectoryPanel(wx.Control):
 
         self.SetMinSize((600, 400))
 
-        wx.GetApp().directory.Bind(ContentDirectory.Event.STATE_CHANGED, lambda state: wx.CallAfter(self.__OnDirectoryStateChanged, state))
-        wx.GetApp().directory.Bind(ContentDirectory.Event.DEVICE_CHANGED, lambda state: wx.CallAfter(self.__OnDirectoryDeviceChanged, state))
+        wx.GetApp().directory.Bind(ContentDirectory.Event.STATE_CHANGED, lambda emitter, state: wx.CallAfter(self.__OnDirectoryStateChanged, emitter, state))
+        wx.GetApp().directory.Bind(ContentDirectory.Event.DEVICE_CHANGED, lambda emitter, state: wx.CallAfter(self.__OnDirectoryDeviceChanged, emitter, state))
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -649,7 +651,7 @@ class ContentDirectoryPanel(wx.Control):
         self.Refresh()
 
 
-    def __OnDirectoryDeviceChanged(self, device):
+    def __OnDirectoryDeviceChanged(self, content_directory, device):
         if device == None:
             self.SetTitle("")
             self.button_reload.Disable()
@@ -658,8 +660,8 @@ class ContentDirectoryPanel(wx.Control):
             self.notebook.ChangeSelection(0)
 
 
-    def __OnDirectoryStateChanged(self, state):
-        directory = wx.GetApp().directory
+    def __OnDirectoryStateChanged(self, content_directory, state):
+        directory = content_directory
 
         if directory.device:
             self.button_reload.Enable()
@@ -908,6 +910,6 @@ class BreadCrumbs(wx.Control):
         self.GetParent().OnResize(None)
 
 
-    def __OnDirChanged(self, _):
-        self.SetPath(wx.GetApp().directory.GetHierarchy())
+    def __OnDirChanged(self, content_directory, _):
+        self.SetPath(content_directory.GetHierarchy())
 

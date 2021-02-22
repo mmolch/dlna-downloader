@@ -10,6 +10,24 @@ msgid_plural "%(num)d Files"
 msgstr[0] ""
 msgstr[1] ""
 
+#, python-format
+msgid "%(num)d active"
+msgid_plural "%(num)d active"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(num)d completed"
+msgid_plural "%(num)d completed"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(num)d queued"
+msgid_plural "%(num)d queued"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "&About…"
 msgstr ""
 
@@ -37,7 +55,11 @@ msgstr ""
 msgid "Connecting…"
 msgstr ""
 
-msgid "Created by Moritz Molch"
+#, python-format
+msgid "Content purported to be compressed with %s but failed to decompress."
+msgstr ""
+
+msgid "Created by {}"
 msgstr ""
 
 msgid "Date"
@@ -70,20 +92,25 @@ msgstr ""
 msgid "File"
 msgstr ""
 
+msgid "License"
+msgstr ""
+
 msgid "No device selected"
 msgstr ""
 
 msgid ""
-"Please choose a device from the device list.\n"
-"If your device isn't shown, click on \"Refresh\" to\n"
-"manually ask for responses from all DLNA-enabled\n"
-"devices whithin your network."
+"Please select a device from the device-list.\n"
+"If your device isn't shown, click on \"Refresh\" to discover\n"
+"newly added devices in your local network."
 msgstr ""
 
 msgid "Queued"
 msgstr ""
 
 msgid "Reading directory…"
+msgstr ""
+
+msgid "Redirected but the response is missing a Location: header."
 msgstr ""
 
 msgid "Refresh"
@@ -119,6 +146,9 @@ msgstr ""
 msgid "Stopped"
 msgstr ""
 
+msgid "The challenge doesn't contain a server nonce, or this one is empty."
+msgstr ""
+
 msgid ""
 "The currently downloading file will be incomplete if you stop the "
 "download.\n"
@@ -138,6 +168,18 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
+#, python-format
+msgid "Unsupported value for algorithm: %s.algorithm"
+msgstr ""
+
+#, python-format
+msgid "Unsupported value for pw-algorithm: %s.pw-algorithm"
+msgstr ""
+
+#, python-format
+msgid "Unsupported value for qop: %s."
+msgstr ""
+
 msgid "View License"
 msgstr ""
 
@@ -145,17 +187,5 @@ msgid "Waiting for device…"
 msgstr ""
 
 msgid "remaining"
-msgstr ""
-
-msgid "{} active"
-msgstr ""
-
-msgid "{} completed"
-msgstr ""
-
-msgid "{} queued"
-msgstr ""
-
-msgid "© 2021 | License: GPL 3"
 msgstr ""
 

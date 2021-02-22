@@ -56,7 +56,7 @@ class DeviceButton(wx.Control):
         directory = wx.GetApp().directory
         directory.SetObjectId("0")
         directory.SetDevice(self.__device)
-        wx.GetApp().directory.Load()
+        directory.Load()
 
 
     def __OnLeftUp(self, event):
@@ -128,12 +128,12 @@ class DeviceList(wx.ScrolledWindow):
         self.SetSizer(self.__sizer)
 
         upnp = wx.GetApp().upnp
-        upnp.Bind(PyUpnp.Event.CLIENT_DEVICE_ADDED, lambda device: wx.CallAfter(self.__OnClientDeviceAdded, device))
-        upnp.Bind(PyUpnp.Event.CLIENT_DEVICE_REMOVED, lambda device: wx.CallAfter(self.__OnClientDeviceRemoved, device))
-        wx.GetApp().directory.Bind(ContentDirectory.Event.DEVICE_CHANGED, lambda device: wx.CallAfter(self.__OnDeviceChanged, device))
+        upnp.Bind(PyUpnp.Event.CLIENT_DEVICE_ADDED, lambda pyupnp, device: wx.CallAfter(self.__OnClientDeviceAdded, pyupnp, device))
+        upnp.Bind(PyUpnp.Event.CLIENT_DEVICE_REMOVED, lambda pyupnp, device: wx.CallAfter(self.__OnClientDeviceRemoved, pyupnp, device))
+        wx.GetApp().directory.Bind(ContentDirectory.Event.DEVICE_CHANGED, lambda content_directory, device: wx.CallAfter(self.__OnDeviceChanged, content_directory, device))
 
 
-    def __OnDeviceChanged(self, device):
+    def __OnDeviceChanged(self, content_directory, device):
         self.Refresh()
 
 
@@ -142,11 +142,11 @@ class DeviceList(wx.ScrolledWindow):
         event.Skip()
 
 
-    def __OnClientDeviceAdded(self, device):
+    def __OnClientDeviceAdded(self, pyupnp, device):
         self.__Rebuild()
 
 
-    def __OnClientDeviceRemoved(self, device):
+    def __OnClientDeviceRemoved(self, pyupnp, device):
         self.__Rebuild()
 
 

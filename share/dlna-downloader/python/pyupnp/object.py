@@ -47,4 +47,4 @@ class Object:
                 self.__event_callbacks[event].remove(callback)
                 continue
 
-            callback(*args)
+            callback(self, *args)

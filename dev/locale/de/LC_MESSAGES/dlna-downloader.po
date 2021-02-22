@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-08 17:27+0100\n"
+"POT-Creation-Date: 2021-02-22 23:49+0100\n"
 "PO-Revision-Date: 2021-02-07 12:43+0100\n"
 "Last-Translator: \n"
 "Language: de\n"
@@ -21,14 +21,32 @@ msgstr ""
 #, python-format
 msgid "%(num)d Directory"
 msgid_plural "%(num)d Directories"
-msgstr[0] "%(num)d Ordner"
-msgstr[1] "%(num)d Ordner"
+msgstr[0] "%(num)d Verzeichnis"
+msgstr[1] "%(num)d Verzeichnisse"
 
 #, python-format
 msgid "%(num)d File"
 msgid_plural "%(num)d Files"
 msgstr[0] "%(num)d Datei"
 msgstr[1] "%(num)d Dateien"
+
+#, python-format
+msgid "%(num)d active"
+msgid_plural "%(num)d active"
+msgstr[0] "%(num)d aktiv"
+msgstr[1] "%(num)d aktiv"
+
+#, python-format
+msgid "%(num)d completed"
+msgid_plural "%(num)d completed"
+msgstr[0] "%(num)d abgeschlossen"
+msgstr[1] "%(num)d abgeschlossen"
+
+#, python-format
+msgid "%(num)d queued"
+msgid_plural "%(num)d queued"
+msgstr[0] "%(num)d in Warteschlage"
+msgstr[1] "%(num)d in Warteschlage"
 
 msgid "&About…"
 msgstr "&Über…"
@@ -60,8 +78,12 @@ msgstr "Schließen"
 msgid "Connecting…"
 msgstr "Verbinde…"
 
-msgid "Created by Moritz Molch"
-msgstr "Erstellt von Moritz Molch"
+#, python-format
+msgid "Content purported to be compressed with %s but failed to decompress."
+msgstr ""
+
+msgid "Created by {}"
+msgstr "Erstellt von {}"
 
 msgid "Date"
 msgstr "Datum"
@@ -93,14 +115,16 @@ msgstr "Das Verzeichnis konnte nicht gelesen werden"
 msgid "File"
 msgstr "Datei"
 
+msgid "License"
+msgstr "Lizenz"
+
 msgid "No device selected"
 msgstr "Kein Gerät ausgewählt"
 
 msgid ""
-"Please choose a device from the device list.\n"
-"If your device isn't shown, click on \"Refresh\" to\n"
-"manually ask for responses from all DLNA-enabled\n"
-"devices whithin your network."
+"Please select a device from the device-list.\n"
+"If your device isn't shown, click on \"Refresh\" to discover\n"
+"newly added devices in your local network."
 msgstr ""
 "Bitte wähle ein Gerät aus der Geräte-Liste.\n"
 "Sollte ein Gerät nicht aufgelistet sein, klicke\n"
@@ -112,6 +136,9 @@ msgstr "In Warteschlange"
 
 msgid "Reading directory…"
 msgstr "Verzeichnis wird gelesen…"
+
+msgid "Redirected but the response is missing a Location: header."
+msgstr ""
 
 msgid "Refresh"
 msgstr "Aktualisieren"
@@ -146,6 +173,9 @@ msgstr "Stop"
 msgid "Stopped"
 msgstr "Gestoppt"
 
+msgid "The challenge doesn't contain a server nonce, or this one is empty."
+msgstr ""
+
 msgid ""
 "The currently downloading file will be incomplete if you stop the "
 "download.\n"
@@ -172,6 +202,18 @@ msgstr ""
 msgid "Title"
 msgstr "Titel"
 
+#, python-format
+msgid "Unsupported value for algorithm: %s.algorithm"
+msgstr ""
+
+#, python-format
+msgid "Unsupported value for pw-algorithm: %s.pw-algorithm"
+msgstr ""
+
+#, python-format
+msgid "Unsupported value for qop: %s."
+msgstr ""
+
 msgid "View License"
 msgstr "Lizenz ansehen"
 
@@ -180,22 +222,3 @@ msgstr "Warte auf Gerät…"
 
 msgid "remaining"
 msgstr "verbleibend"
-
-msgid "{} active"
-msgstr "{} aktiv"
-
-msgid "{} completed"
-msgstr "{} abgeschlossen"
-
-msgid "{} queued"
-msgstr "{} in Warteschlage"
-
-msgid "© 2021 | License: GPL 3"
-msgstr "© 2021 | Lizenz: GPL 3"
-
-#~ msgid "&Quit…"
-#~ msgstr "&Beenden"
-
-#~ msgid "Download Directory"
-#~ msgstr "Download Verzeichnis"
-

@@ -131,7 +131,7 @@ class PyUpnp(Object):
         self.__client_device_class = _class
 
 
-    def __OnBroadcastReceived(self, data, addr):
+    def __OnBroadcastReceived(self, broadcast_listener, data, addr):
         http_header = http_header_to_dict(data)
         if not http_header:
             return
@@ -260,7 +260,7 @@ class PyUpnp(Object):
         return packet
 
 
-    def __OnSearchResponse(self, data, addr):
+    def __OnSearchResponse(self, udp_socket, data, addr):
         http_header = http_header_to_dict(data)
         if not http_header:
             return

@@ -20,10 +20,11 @@ class ContentDirectory(Object):
 
 
     class State(Enum):
-        CONNECTING = 3
-        DOWNLOADING = 4
-        IDLE = 5
-        ERROR = 6
+        CONNECTING = 1
+        DOWNLOADING = 2
+        IDLE = 3
+        ERROR = 4
+        CANCELED = 5
 
 
     class Field(Enum):
@@ -74,7 +75,7 @@ class ContentDirectory(Object):
         wx.GetApp().upnp.Bind(PyUpnp.Event.CLIENT_DEVICE_REMOVED, self.__OnDeviceRemoved)
 
 
-    def __OnDeviceRemoved(self, device):
+    def __OnDeviceRemoved(self, pyupnp, device):
         if self.__device == device:
             self.SetDevice(None)
 
@@ -153,6 +154,7 @@ class ContentDirectory(Object):
     def Cancel(self):
         if self.__browse_request:
             self.__browse_request.Cancel()
+            self.__browse_request = None
 
 
     @property
@@ -192,16 +194,22 @@ class ContentDirectory(Object):
         self.__browse_request.Request()        
 
 
-    def __OnRequestStateChanged(self, state):
+    def __OnRequestStateChanged(self, soap_request, state):
+        if self.__browse_request != soap_request:
+            self.__SetState(self.State.CANCELED)
+            return
+
         if state == SoapRequest.State.CANCELED:
-            self.__SetState(self.State.IDLE)
+            self.__SetState(self.State.CANCELED)
+
         elif state == SoapRequest.State.ERROR:
-            self.__error_message = self.__browse_request.error_message
+            self.__error_message = soap_request.error_message
             self.__SetState(self.State.ERROR)
+
         elif state == SoapRequest.State.FINISHED:
-            response = self.__browse_request.soap_body
+            response = soap_request.soap_body
             if not response:
-                self.__error_message = self.__browse_request.error_message
+                self.__error_message = soap_request.error_message
                 self.__SetState(self.State.ERROR)
                 return
 

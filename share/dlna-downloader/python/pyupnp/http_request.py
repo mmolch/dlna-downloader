@@ -84,12 +84,11 @@ class HttpRequest(Object):
             self.__SetState(self.State.FINISHED)
 
         except Exception as e:
-            self.__error_message = str(e)
-            self._logger.warning(str(e))
-
-            if self.state == self.__cancel:
+            if self.__cancel:
                 self.__SetState(self.State.CANCELED)
             else:
+                self.__error_message = str(e)
+                self._logger.warning(str(e))
                 self.__SetState(self.State.ERROR)
 
 
