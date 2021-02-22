@@ -74,10 +74,12 @@ class HttpRequest(Object):
 
             response = self.__connection.getresponse()
             self.__response_headers = response.headers
-            self._logger.debug('RECV: {}'.format(self.__response_headers))
+            if logging.root.level == logging.DEBUG:
+                self._logger.debug('RECV:{}'.format(self.__response_headers))
 
             self.__response_body = response.read()
-            self._logger.debug('RECV: {}'.format(self.__response_body))
+            if logging.root.level == logging.DEBUG:
+                self._logger.debug('RECV:{}'.format(self.__response_body.decode()))
 
             self.__SetState(self.State.FINISHED)
 

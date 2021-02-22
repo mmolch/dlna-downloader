@@ -3,6 +3,8 @@ from .object import Object
 
 from enum import Enum
 import html.parser
+import logging
+import sys
 from xml.etree import ElementTree
 
 
@@ -58,9 +60,11 @@ class SoapRequest(Object):
             namespaces['s'] = "http://schemas.xmlsoap.org/soap/envelope/"
             namespaces['u'] = "urn:schemas-upnp-org:control-1-0"
             self.__soap_body = doc.find('s:Body', namespaces)
+            if logging.root.level == logging.DEBUG:
+                self._logger.debug('RECV:{}'.format(ElementTree.tostring(self.__soap_body)))
 
             fault =  self.__soap_body.find('s:Fault', namespaces)
-            if fault:
+            if fault != None:
                 try:
                     self.__error_message = fault.find('detail/u:UPnPError/u:errorDescription', namespaces).text
                 except:

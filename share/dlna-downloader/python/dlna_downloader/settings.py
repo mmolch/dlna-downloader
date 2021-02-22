@@ -60,6 +60,10 @@ class Settings(Object):
             if self.__settings[key] == value:
                 return
 
+        if key == 'download-directory':
+            if not os.path.exists(value):
+                os.makedirs(value)
+
         self.__settings[key] = value
         self.Save()
         self.Emit(self.Event.CHANGED, key, value)
@@ -73,6 +77,10 @@ class Settings(Object):
 
             return os.path.join(app_data, "DLNA Downloader", "settings.ini")
 
+        elif os.getenv('SNAP_USER_COMMON'):
+            snap_common_dir = os.getenv('SNAP_USER_COMMON')
+            return os.path.join(snap_common_dir, ".config", "dlna-downloader", "settings.conf")
+
         else:
             home_dir = os.getenv("HOME")
             return os.path.join(home_dir, ".config", "dlna-downloader", "settings.conf")
@@ -81,8 +89,11 @@ class Settings(Object):
     def LoadDefaults(self):
         if platform.system() == "Windows":
             home_dir = os.getenv("USERPROFILE")
+
+        elif os.getenv('SNAP_USER_COMMON'):
+            home_dir = os.getenv('SNAP_USER_COMMON')
+
         else:
             home_dir = os.getenv("HOME")
 
         self.Set('download-directory', os.path.join(home_dir, "Downloads", "DLNA Downloader"))
-
