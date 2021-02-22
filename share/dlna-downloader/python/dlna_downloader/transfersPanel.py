@@ -1,5 +1,6 @@
 import wx
 
+from .settings import Settings
 from .transfer import Transfer
 from .transfers import Transfers
 from .util import SizeToString, SecondsToString
@@ -180,11 +181,18 @@ class TransfersPanel(wx.Control):
 
         self.SetSizerAndFit(sizer1)
 
-        wx.GetApp().transfers.Bind(Transfers.Event.ADDED, lambda transfer: wx.CallAfter(self.__OnTransferAdded, transfer))
-        wx.GetApp().transfers.Bind(Transfers.Event.REMOVED, lambda transfer: wx.CallAfter(self.__OnTransferRemoved, transfer))
-        wx.GetApp().transfers.Bind(Transfers.Event.STATE_CHANGED, lambda state: wx.CallAfter(self.__OnStateChanged, state))
+        app = wx.GetApp()
+        app.transfers.Bind(Transfers.Event.ADDED, lambda transfer: wx.CallAfter(self.__OnTransferAdded, transfer))
+        app.transfers.Bind(Transfers.Event.REMOVED, lambda transfer: wx.CallAfter(self.__OnTransferRemoved, transfer))
+        app.transfers.Bind(Transfers.Event.STATE_CHANGED, lambda state: wx.CallAfter(self.__OnStateChanged, state))
+        app.settings.Bind(Settings.Event.CHANGED, self.__OnSettingsChanged)
 
-        self._UpdateTitle()
+        self.__OnSettingsChanged('download-directory', app.settings.Get('download-directory'))
+
+
+    def __OnSettingsChanged(self, key, value):
+        if key == 'download-directory':
+            self.title.SetLabel("{} ({})".format(_("Downloads"), value))
 
 
     def _UpdateTitle(self):
