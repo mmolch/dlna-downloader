@@ -45,6 +45,7 @@ class HttpRequest(Object):
 
         try:
             self.__connection.sock.shutdown(socket.SHUT_WR)
+            self.__SetState(self.State.CANCELED)
         except:
             pass
 
@@ -65,6 +66,9 @@ class HttpRequest(Object):
                 sys.stdout = sys.stderr
 
             self.__connection.request(self.__method, self.__url, self.__body, self.__headers)
+            if self.__cancel:
+                self.__SetState(self.State.CANCELED)
+                return
 
             if logging.root.level == logging.DEBUG:
                 self.__connection.set_debuglevel(10)
@@ -73,6 +77,10 @@ class HttpRequest(Object):
             self.__connection.set_debuglevel(0)
 
             response = self.__connection.getresponse()
+            if self.__cancel:
+                self.__SetState(self.State.CANCELED)
+                return
+
             self.__response_headers = response.headers
             if logging.root.level == logging.DEBUG:
                 self._logger.debug('RECV:{}'.format(self.__response_headers))
@@ -81,11 +89,16 @@ class HttpRequest(Object):
             if logging.root.level == logging.DEBUG:
                 self._logger.debug('RECV:{}'.format(self.__response_body.decode()))
 
-            self.__SetState(self.State.FINISHED)
+            if self.__cancel:
+                self.__SetState(self.State.CANCELED)
+            
+            else:
+                self.__SetState(self.State.FINISHED)
 
         except Exception as e:
             if self.__cancel:
                 self.__SetState(self.State.CANCELED)
+            
             else:
                 self.__error_message = str(e)
                 self._logger.warning(str(e))

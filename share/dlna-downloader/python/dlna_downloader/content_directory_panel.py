@@ -165,8 +165,6 @@ class ContentDirectoryListView(wx.ListView):
         self.Freeze()
         if state == ContentDirectory.State.IDLE:
             self.Rebuild()
-        elif state == ContentDirectory.State.CANCELED:
-            self.Rebuild()
         else:
             self.SetItemCount(0)
         self.Thaw()

@@ -24,7 +24,6 @@ class ContentDirectory(Object):
         DOWNLOADING = 2
         IDLE = 3
         ERROR = 4
-        CANCELED = 5
 
 
     class Field(Enum):
@@ -196,11 +195,11 @@ class ContentDirectory(Object):
 
     def __OnRequestStateChanged(self, soap_request, state):
         if self.__browse_request != soap_request:
-            self.__SetState(self.State.CANCELED)
+            self.__SetState(self.State.IDLE)
             return
 
         if state == SoapRequest.State.CANCELED:
-            self.__SetState(self.State.CANCELED)
+            self.__SetState(self.State.IDLE)
 
         elif state == SoapRequest.State.ERROR:
             self.__error_message = soap_request.error_message
