@@ -60,7 +60,7 @@ class AboutDialog(wx.Dialog):
 
         sizer.AddSpacer(int(font_normal.GetPixelSize()[1]/3))
 
-        version_text = wx.StaticText(self, label="Version 1.0")
+        version_text = wx.StaticText(self, label="Version 1.1")
         sizer.Add(version_text)
 
         sizer.AddSpacer(int(font_normal.GetPixelSize()[1]))

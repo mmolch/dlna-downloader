@@ -22,7 +22,7 @@ class TransfersListView(wx.ListView):
 
 
     def __init__(self, parent, *args, **kwargs):
-        wx.ListView.__init__(self, parent, style=wx.LC_REPORT|wx.LC_HRULES|wx.LC_VIRTUAL|wx.NO_BORDER|wx.LC_SINGLE_SEL, *args, **kwargs)
+        wx.ListView.__init__(self, parent, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.NO_BORDER|wx.LC_SINGLE_SEL, *args, **kwargs)
 
         self.SetMinSize((400, 150))
         self.EnableAlternateRowColours()
