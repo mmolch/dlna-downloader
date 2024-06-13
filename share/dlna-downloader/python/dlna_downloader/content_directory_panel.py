@@ -374,7 +374,7 @@ class ErrorPanel(wx.Panel):
         self.sizer2.Add(text, 0)
 
         self.SetFont(font_normal)
-        self.sizer2.Add(0, font_large.GetPixelSize().height/2)
+        self.sizer2.AddSpacer(int(font_large.GetPixelSize().height/2))
 
         self.__error_text = None    
 
@@ -419,7 +419,7 @@ class DirectoryEmptyPanel(wx.Panel):
         self.sizer2.Add(text, 0)
 
         self.SetFont(font_normal)
-        self.sizer2.Add(0, font_large.GetPixelSize().height/2)
+        self.sizer2.AddSpacer(int(font_large.GetPixelSize().height/2))
 
         sizer.Add(self.sizer2, 1, wx.CENTER)
         outersizer.Add(sizer, 1, wx.CENTER)
@@ -450,7 +450,7 @@ class LoadDirectoryPanel(wx.Panel):
         text = wx.StaticText(self, label=_("Reading directory…"))
         sizer2.Add(text, 0, wx.CENTER)
 
-        sizer2.Add(0, 6)
+        sizer2.AddSpacer(6)
 
         self.gauge = wx.Gauge(self, size=(300, -1), style=wx.GA_SMOOTH)
         sizer2.Add(self.gauge)
@@ -487,7 +487,7 @@ class WaitingForDevicePanel(wx.Panel):
         text = wx.StaticText(self, label=_("Waiting for device…"))
         sizer2.Add(text, 0, wx.CENTER)
 
-        sizer2.Add(0, 6)
+        sizer2.AddSpacer(6)
 
         self.gauge = wx.Gauge(self, size=(300, -1))
         
@@ -542,7 +542,7 @@ class WelcomePanel(wx.Panel):
         self.SetFont(font_normal)
         sizer2.Add(text, 0)
 
-        sizer2.Add(0, font_large.GetPixelSize().height/2)
+        sizer2.AddSpacer(int(font_large.GetPixelSize().height/2))
 
 
         text2 = wx.StaticText(self, label=_("Please select a device from the device-list.\nIf your device isn't shown, click on \"Refresh\" to discover\nnewly added devices in your local network."))
@@ -602,9 +602,9 @@ class ContentDirectoryPanel(wx.Control):
 
         self.sizer_header.Add(3, 0)
 
-        sizer.Add(0, 3)
+        sizer.AddSpacer(3)
         sizer.Add(self.sizer_header, 0, wx.EXPAND)
-        sizer.Add(0, 3)
+        sizer.AddSpacer(3)
         sizer.Add(wx.StaticLine(self, size=(-1, 1)), 0, wx.EXPAND)
 
 

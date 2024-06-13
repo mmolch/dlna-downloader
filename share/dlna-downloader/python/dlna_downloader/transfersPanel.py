@@ -51,11 +51,11 @@ class TransfersListView(wx.ListView):
 
 
     def OnResize(self, event):
-        self.SetColumnWidth(0, self.GetVirtualSize().width*0.4)
-        self.SetColumnWidth(1, self.GetVirtualSize().width*0.4)
-        self.SetColumnWidth(2, self.GetVirtualSize().width*0.2)
+        self.SetColumnWidth(0, int(self.GetVirtualSize().width*0.4))
+        self.SetColumnWidth(1, int(self.GetVirtualSize().width*0.4))
+        self.SetColumnWidth(2, int(self.GetVirtualSize().width*0.2))
         self.Layout()
-        self.SetColumnWidth(2, self.GetVirtualSize().width*0.2-1)
+        self.SetColumnWidth(2, int(self.GetVirtualSize().width*0.2-1))
         self.Layout()
         event.Skip()
 

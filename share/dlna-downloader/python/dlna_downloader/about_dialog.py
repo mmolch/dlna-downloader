@@ -58,22 +58,22 @@ class AboutDialog(wx.Dialog):
         self.SetFont(font_normal)
         sizer.Add(title_text)
 
-        sizer.Add(0, font_normal.GetPixelSize()[1]/3)
+        sizer.AddSpacer(int(font_normal.GetPixelSize()[1]/3))
 
         version_text = wx.StaticText(self, label="Version 1.0")
         sizer.Add(version_text)
 
-        sizer.Add(0, font_normal.GetPixelSize()[1])
+        sizer.AddSpacer(int(font_normal.GetPixelSize()[1]))
 
         created_by_text = wx.StaticText(self, label=_("Created by {}".format("Moritz Molch")))
         sizer.Add(created_by_text, 0, wx.EXPAND)
 
-        sizer.Add(0, font_normal.GetPixelSize()[1]/3)
+        sizer.AddSpacer(int(font_normal.GetPixelSize()[1]/3))
 
         created_by_text = wx.StaticText(self, label="© 2021 | {}: GPL 3".format(_("License")))
         sizer.Add(created_by_text, 0, wx.EXPAND)
 
-        sizer.Add(0, font_normal.GetPixelSize()[1])
+        sizer.AddSpacer(int(font_normal.GetPixelSize()[1]))
 
         button_sizer = wx.BoxSizer()
         sizer.Add(button_sizer, 0, wx.EXPAND)

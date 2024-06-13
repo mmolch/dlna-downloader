@@ -70,7 +70,7 @@ class ClientDevice(Object):
 
 
         try:
-            services = self.FindInDescription('d:device/d:serviceList').getchildren()
+            services = list(self.FindInDescription('d:device/d:serviceList'))
             for service in services:
                 try:
                     serviceType = self.FindInDescription('d:serviceType', service).text
