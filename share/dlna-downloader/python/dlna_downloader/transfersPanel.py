@@ -103,11 +103,12 @@ class TransfersListView(wx.ListView):
 
 
     def __UpdateThread(self):
-        while wx.GetApp().transfers.state == Transfers.State.RUNNING:
+        while wx.GetApp() and wx.GetApp().transfers.state == Transfers.State.RUNNING:
             wx.CallAfter(self.Refresh)
             sleep(1)
 
-        wx.CallAfter(self.Refresh)
+        if wx.GetApp():
+            wx.CallAfter(self.Refresh)
 
 
     def OnGetItemColumnImage(self, item, column):

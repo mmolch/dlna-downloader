@@ -34,7 +34,7 @@ class ContentDirectoryListView(wx.ListView):
         DESCENDING = 3
 
     def __init__(self, parent, *args, **kwargs):
-        wx.ListView.__init__(self, parent, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.NO_BORDER|wx.LC_SINGLE_SEL, *args, **kwargs)
+        wx.ListView.__init__(self, parent, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.NO_BORDER, *args, **kwargs)
 
         self.GetGrandParent().button_download.Disable()
 
@@ -74,13 +74,7 @@ class ContentDirectoryListView(wx.ListView):
                 item = self.__directory.items[index]
                 res = item[ContentDirectory.Field.RES]
 
-                already_downloading = False
-                for transfer in wx.GetApp().transfers.transfers:
-                    if transfer.source == res:
-                        already_downloading = True
-                        break
-
-                if already_downloading:
+                if wx.GetApp().transfers.IsDownloading(res):
                     continue
 
                 title = item[ContentDirectory.Field.TITLE]
@@ -103,6 +97,7 @@ class ContentDirectoryListView(wx.ListView):
                 filepath = os.path.join(wx.GetApp().settings.Get("download-directory"), filename)
                 filepath = UniqueFilename(filepath)
                 wx.GetApp().transfers.Add(Transfer(filepath, res, size))
+                
         except Exception as e:
             print(str(e))
 

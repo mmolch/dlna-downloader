@@ -90,6 +90,14 @@ class Transfers(Object):
             return None
 
 
+    def IsDownloading(self, url):
+        for transfer in self.__transfers:
+            if transfer.source == url:
+                return True
+
+        return False
+
+
     @property
     def transfers(self):
         return self.__transfers

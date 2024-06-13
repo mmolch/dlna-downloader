@@ -5,7 +5,7 @@ import os
 from threading import Thread
 import time
 import urllib.request
-
+import wx
 
 
 class Transfer(Object):
@@ -76,7 +76,8 @@ class Transfer(Object):
             return
 
         self.__state = state
-        self.Emit(self.Event.STATE_CHANGED, state)
+        if wx.GetApp():
+            self.Emit(self.Event.STATE_CHANGED, state)
 
 
     def __WorkerThread(self):
