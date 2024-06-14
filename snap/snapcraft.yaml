@@ -3,7 +3,7 @@ adopt-info: dlna-downloader
 license: GPL-3.0
 grade: stable
 confinement: strict
-base: core18
+base: core22
 architectures:
   - build-on: amd64
 #  - build-on: arm64
@@ -14,13 +14,14 @@ parts:
     plugin: dump
     source: .
     parse-info: [dev/snap/com.moritzmolch.dlna-downloader.appdata.xml]
+    build-packages: [zstd]
     override-prime: |
-      ${SNAPCRAFT_PROJECT_DIR}/dev/snap/override-prime.sh
+      ${SNAPCRAFT_PROJECT_DIR}/dev/snap/override-prime-core22.sh
 
 apps:
   dlna-downloader:
-    command: dlna-downloader
-    extensions: [gnome-3-34]
+    command: bin/dlna-downloader
+    extensions: [gnome]
     plugs:
       - home
       - removable-media
