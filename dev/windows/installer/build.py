@@ -26,6 +26,8 @@ def copy_file(src, dest):
 
 with TemporaryDirectory() as temp_dir:
     dist_dir = join(temp_dir, 'dist')
+    os.mkdir(dist_dir)
+
     # Copy data from share/app directory
     os.chdir(data_dir)
     for file in pathlib.Path().glob('*'):
@@ -40,7 +42,7 @@ with TemporaryDirectory() as temp_dir:
 
     #Copy Windows runtime
     os.chdir(join(src_dir, 'dev', 'windows', 'runtime'))
-    shutil.copy('dlna-downloader_release.exe', os.path.join(dist_dir, 'dlna-downloader.exe'))
+    shutil.copy('dlna-downloader-release.exe', os.path.join(dist_dir, 'dlna-downloader.exe'))
 
     for file in pathlib.Path().glob('**/*.dll'):
         copy_file(str(file), dist_dir)

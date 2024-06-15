@@ -39,9 +39,12 @@ Header file for creating custom installer pages with nsDialogs
 !define /ifndef WS_CLIPSIBLINGS      0x04000000
 !define /ifndef WS_CLIPCHILDREN      0x02000000
 !define /ifndef WS_MAXIMIZE          0x01000000
+!define /ifndef WS_BORDER            0x00800000
 !define /ifndef WS_VSCROLL           0x00200000
 !define /ifndef WS_HSCROLL           0x00100000
 !define /ifndef WS_GROUP             0x00020000
+!define /ifndef WS_MINIMIZEBOX       0x00020000
+!define /ifndef WS_MAXIMIZEBOX       0x00010000
 !define /ifndef WS_TABSTOP           0x00010000
 
 !define ES_LEFT              0x00000000
@@ -291,6 +294,14 @@ Header file for creating custom installer pages with nsDialogs
 !define __NSD_RadioButton_STYLE ${DEFAULT_STYLES}|${WS_TABSTOP}|${BS_TEXT}|${BS_VCENTER}|${BS_AUTORADIOBUTTON}|${BS_MULTILINE}
 !define __NSD_RadioButton_EXSTYLE 0
 
+!define __NSD_FirstRadioButton_CLASS ${__NSD_RadioButton_CLASS}
+!define __NSD_FirstRadioButton_STYLE ${DEFAULT_STYLES}|${WS_TABSTOP}|${WS_GROUP}|${BS_TEXT}|${BS_VCENTER}|${BS_AUTORADIOBUTTON}|${BS_MULTILINE}
+!define __NSD_FirstRadioButton_EXSTYLE ${__NSD_RadioButton_EXSTYLE}
+
+!define __NSD_AdditionalRadioButton_CLASS ${__NSD_RadioButton_CLASS}
+!define __NSD_AdditionalRadioButton_STYLE ${DEFAULT_STYLES}|${BS_TEXT}|${BS_VCENTER}|${BS_AUTORADIOBUTTON}|${BS_MULTILINE}
+!define __NSD_AdditionalRadioButton_EXSTYLE ${__NSD_RadioButton_EXSTYLE}
+
 !define __NSD_Text_CLASS EDIT
 !define __NSD_Text_STYLE ${DEFAULT_STYLES}|${WS_TABSTOP}|${ES_AUTOHSCROLL}
 !define __NSD_Text_EXSTYLE ${WS_EX_WINDOWEDGE}|${WS_EX_CLIENTEDGE}
@@ -406,6 +417,8 @@ Header file for creating custom installer pages with nsDialogs
 !insertmacro __NSD_DefineControl GroupBox
 !insertmacro __NSD_DefineControl CheckBox
 !insertmacro __NSD_DefineControl RadioButton
+!insertmacro __NSD_DefineControl FirstRadioButton
+!insertmacro __NSD_DefineControl AdditionalRadioButton
 !insertmacro __NSD_DefineControl Text
 !insertmacro __NSD_DefineControl MLText
 !insertmacro __NSD_DefineControl Password
@@ -688,6 +701,21 @@ SendMessage ${CONTROL} ${CB_INSERTSTRING} -1 `STR:${STRING}`
 !define NSD_CB_SelectString "!insertmacro _NSD_CB_SelectString "
 !macro _NSD_CB_SelectString CONTROL STRING
 	SendMessage ${CONTROL} ${CB_SELECTSTRING} -1 `STR:${STRING}`
+!macroend
+
+
+!define NSD_CB_SelectStringExact "!insertmacro _NSD_CB_SelectStringExact "
+!macro _NSD_CB_SelectStringExact CONTROL STRING
+	!insertmacro _LOGICLIB_TEMP
+	SendMessage ${CONTROL} ${CB_FINDSTRINGEXACT} -1 `STR:${STRING}` $_LOGICLIB_TEMP
+	StrCmp $_LOGICLIB_TEMP -1 +2
+		SendMessage ${CONTROL} ${CB_SETCURSEL} $_LOGICLIB_TEMP 0
+!macroend
+
+
+!define NSD_CB_FindStringExact "!insertmacro _NSD_CB_FindStringExact "
+!macro _NSD_CB_FindStringExact CONTROL STRING VAR
+	SendMessage ${CONTROL} ${CB_FINDSTRINGEXACT} -1 `STR:${STRING}` ${VAR}
 !macroend
 
 
@@ -994,7 +1022,7 @@ Exch
 
 !define NSD_ClearImage `!insertmacro __NSD_ClearImage ${IMAGE_BITMAP} `
 !define NSD_ClearBitmap `${NSD_ClearImage} `
-!define NSD_ClearIcon  `!insertmacro __NSD_ClearImage ${IMAGE_ICON } `
+!define NSD_ClearIcon  `!insertmacro __NSD_ClearImage ${IMAGE_ICON} `
 !macro __NSD_ClearImage _IMGTYPE CONTROL
 	SendMessage ${CONTROL} ${STM_SETIMAGE} ${_IMGTYPE} 0
 !macroend

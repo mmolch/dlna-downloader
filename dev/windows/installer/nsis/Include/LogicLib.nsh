@@ -99,7 +99,7 @@
   !macroend
 
   !macro LogicLib_JumpToBranch _Jump _Skip
-    !if `${_Jump}` != ``
+    !if `${_Jump}${_Skip}` != ``
       StrCmp "" "" `${_Jump}` ${_Skip}
     !endif
   !macroend
@@ -133,7 +133,7 @@
     !ifndef _${Type}
       !error "Cannot use _Pop${Type} without a preceding _Push${Type}"
     !endif
-    !ifdef ${_${Type}}Prev${Type}                         ; If a previous statment was active then restore it
+    !ifdef ${_${Type}}Prev${Type}                         ; If a previous statement was active then restore it
       !define _Cur${Type} ${_${Type}}
       !undef _${Type}
       !define _${Type} ${${_Cur${Type}}Prev${Type}}
@@ -142,6 +142,13 @@
     !else
       !undef _${Type}
     !endif
+  !macroend
+
+  !macro _LogicLib_AlwaysTrue _a _b _t _f
+    !insertmacro LogicLib_JumpToBranch `${_t}` `${_f}`
+  !macroend
+  !macro _LogicLib_AlwaysFalse _a _b _t _f
+    !insertmacro LogicLib_JumpToBranch `${_f}` `${_t}`
   !macroend
 
   ; String tests
@@ -812,10 +819,17 @@
     !verbose ${LOGICLIB_VERBOSITY}
     !insertmacro _PushLogic
     !insertmacro _PushScope Switch ${_Logic}              ; Keep a separate stack for switch data
-    !insertmacro _PushScope Break _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a lable for beyond the end of the switch
+    !insertmacro _PushScope Break _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a label for beyond the end of the switch
     !insertmacro _IncreaseCounter
     !define ${_Switch}Var `${_a}`                         ; Remember the left hand side of the comparison
+    !ifdef LL_NOAPPENDMEMFILE
     !tempfile ${_Switch}Tmp                               ; Create a temporary file
+    !if "${NSIS_CHAR_SIZE}" > 1
+      !appendfile /CHARSET=UTF8SIG "${${_Switch}Tmp}" ""  ; Make sure the file uses Unicode
+    !endif
+    !else
+    !appendmemfile ${_Switch}Tmp                          ; Create a temporary file
+    !endif
     !define ${_Logic}Switch _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a label for the end of the switch
     !insertmacro _IncreaseCounter
     Goto ${${_Logic}Switch}                               ; and go there
@@ -834,7 +848,11 @@
       !define _label _LogicLib_Label_${LOGICLIB_COUNTER}  ; Get a label for this case,
       !insertmacro _IncreaseCounter
       ${_label}:                                          ; place it and add it's check to the temp file
+      !ifdef LL_NOAPPENDMEMFILE
       !appendfile "${${_Switch}Tmp}" `!insertmacro _== $\`${${_Switch}Var}$\` $\`${_a}$\` ${_label} ""$\n`
+      !else
+      !appendmemfile ${_Switch}Tmp `!insertmacro _== $\`${${_Switch}Var}$\` $\`${_a}$\` ${_label} ""$\n`
+      !endif
       !undef _label
     !endif
     !verbose pop
@@ -866,13 +884,18 @@
     Goto ${_Break}                                        ; Skip the jump table
     ${${_Logic}Switch}:                                   ; Place the end of the switch
     !undef ${_Logic}Switch
+    !ifdef LL_NOAPPENDMEMFILE
     !include "${${_Switch}Tmp}"                           ; Include the jump table
-    !delfile "${${_Switch}Tmp}"                           ; and clear it up
+    !delfile "${${_Switch}Tmp}"                           ; and delete it
+    !undef ${_Switch}Tmp
+    !else
+    !include /memfile ${_Switch}Tmp                       ; Include the jump table
+    !appendmemfile '' ${_Switch}Tmp                       ; and delete it
+    !endif
     !ifdef ${_Switch}Else                                 ; Was there a default case?
       Goto ${${_Switch}Else}                              ; then go there if all else fails
       !undef ${_Switch}Else
     !endif
-    !undef ${_Switch}Tmp
     !undef ${_Switch}Var
     ${_Break}:                                            ; Place the break label
     !insertmacro _PopScope Break
