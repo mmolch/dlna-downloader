@@ -5,6 +5,7 @@ from .udp_socket import UdpSocket
 from .util import http_header_to_dict
 
 from enum import Enum
+import logging
 import platform
 import threading
 import time
@@ -63,6 +64,7 @@ class PyUpnp(Object):
     
     def __init__(self, user_agent="PyUpnp", user_agent_version="1.0"):
         Object.__init__(self)
+        self.__logger = logging.getLogger(self.__class__.__name__)
 
         self.__state = self.State.STOPPED
         self.__running = False
@@ -82,11 +84,32 @@ class PyUpnp(Object):
         self.__registered_client_services = {}
         self.__registered_server_services = {}
 
+        self.__local_ip = ''
+
         self.__broadcast_listener = UdpBroadcastListener()
         self.__broadcast_listener.Bind(UdpBroadcastListener.Event.RECEIVED_DATA, self.__OnBroadcastReceived)
 
         self.__search_socket = UdpSocket()
         self.__search_socket.Bind(UdpSocket.Event.RECEIVED_DATA, self.__OnSearchResponse)
+
+
+    @property
+    def local_ip(self):
+        return self.__local_ip
+
+
+    @local_ip.setter
+    def local_ip(self, ip):
+        if self.__local_ip == ip:
+            return
+
+        if self.__running:
+            self.__logger.warning("Tried to set a new local ip while running: {}".format(str(ip)))
+            return
+
+        self.__local_ip = ip
+        self.__broadcast_listener.local_ip = ip
+        self.__search_socket.local_ip = ip
 
 
     @property
